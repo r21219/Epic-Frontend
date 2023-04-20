@@ -9,7 +9,7 @@ import {
   Col,
   Accordion,
   Card,
-  Form,
+  Form, Button,
 } from "react-bootstrap";
 import "./App.css";
 
@@ -32,7 +32,20 @@ const sampleCategories: Category[] = [
     id: 1,
     name: "Work",
     tasks: [
-      // ...tasks related to Work category
+      {
+        id: 1,
+        title: "Task 1",
+        date: "2023-05-01",
+        category: "Work",
+        completed: false,
+      },
+      {
+        id: 2,
+        title: "Task 2",
+        date: "2023-05-15",
+        category: "Work",
+        completed: true,
+      },
     ],
   },
   {
@@ -40,6 +53,19 @@ const sampleCategories: Category[] = [
     name: "Personal",
     tasks: [
       // ...tasks related to Personal category
+      { id: 3,
+        title: "Task 3",
+        date: "2023-05-10",
+        category: "Personal",
+        completed: false,
+      },
+      {
+        id: 4,
+        title: "Task 4",
+        date: "2023-05-20",
+        category: "Personal",
+        completed: false,
+      },
     ],
   },
   // ...more categories
@@ -52,9 +78,12 @@ const renderCategories = () => {
           <Accordion as={Card.Header} eventKey={category.id.toString()}>
             {category.name}
           </Accordion>
-          <Accordion.Collapse eventKey={category.id.toString()}>
+          {/*<Accordion.Collapse eventKey={category.id.toString()}>
             <Card.Body>{renderTasks(category.tasks)}</Card.Body>
-          </Accordion.Collapse>
+          </Accordion.Collapse>*/}
+          <Accordion.Item eventKey={category.id.toString()}>
+            <Card.Body>{renderTasks(category.tasks)}</Card.Body>
+          </Accordion.Item>
         </Card>
       </Accordion>
   ));
@@ -63,15 +92,37 @@ const renderCategories = () => {
 const renderTasks = (tasks: Task[]) => {
   function filterTasks(tasks: Task[]) {
     return tasks.filter((task) => {
-      let searchTerm = "test";
+      let searchTerm = "Task 3";
       return task.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
   }
   const filteredTasks = filterTasks(tasks);
 
-  return filteredTasks.map((task, index) => (
-      <Card key={task.id}>
-        {/* Task content */}
+
+  return tasks.map((task, index) => (
+      <Card key={task.id} className="task-row">
+        <Form.Check
+            type="checkbox"
+            id={`task-checkbox-${task.id}`}
+            className="task-checkbox"
+            checked={task.completed}
+            onChange={() => {
+              // Handle checkbox change event
+            }}
+        />
+        <Form.Label htmlFor={`task-checkbox-${task.id}`} className="task-title">
+          {task.title}
+        </Form.Label>
+        <span className="task-date">{task.date}</span>
+        <span className="task-category">{task.category}</span>
+        <Button
+            className="task-delete"
+            onClick={() => {
+              // Handle delete task event
+            }}
+        >
+          Delete
+        </Button>
       </Card>
   ));
 };
