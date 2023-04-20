@@ -53,3 +53,8 @@
 .add-task-input .form-control {
   margin-bottom: 5px;
 }
+
+.selected-category {
+  margin-left: 10px;
+  font-weight: bold;
+}
