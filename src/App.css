@@ -43,3 +43,13 @@
 .task-actions .action-btn {
   margin-left: 1rem;
 }
+
+.add-task-input {
+  background-color: #f8f9fa;
+  padding: 10px 0;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.add-task-input .form-control {
+  margin-bottom: 5px;
+}
