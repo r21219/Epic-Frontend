@@ -1,8 +1,13 @@
+//THIS CODE RENDERS THE TASKS IN THE TASKS LIST (TASK ROW). THEN IT IS IMPORTED INTO THE CATEGORIES COMPONENT
+
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import React from "react";
+import { Category } from "../models/Category";
+import Task from "../models/Task";
 
 //import sampleCategory from /testing-data
-import { Category, Task, sampleCategories } from "../testing-data/sampleCategory";
+//import { Category, Task, sampleCategories } from "../testing-data/sampleCategory";
+import { sampleCategories } from "../testing-data/sampleCategory";
 
 const renderTasks = (
     tasks: Task[],

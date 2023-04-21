@@ -2,8 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Accordion, Button, Card, Form, Modal, Stack, Table} from "react-bootstrap";
 
 //import {Category} from "../models/Category";
-import { Category, Task, sampleCategories } from "../testing-data/sampleCategory";
+//import { Category, Task, sampleCategories } from "../testing-data/sampleCategory";
 import {renderTasks} from "./RenderTasks";
+import { Category } from "../models/Category";
+import Task from "../models/Task";
 
 export const useCategories = (initialCategories: Category[]) => {
     const [categories, setCategories] = useState<Array<Category>>(initialCategories);

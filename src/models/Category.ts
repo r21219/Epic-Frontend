@@ -1,7 +1,7 @@
-import{Tasks} from "./Tasks";
+import Task from "./Task";
 
 export interface Category {
     id: number;
     name: string;
-    tasks: Tasks[];
+    tasks: Task[];
 }

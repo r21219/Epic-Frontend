@@ -1,17 +1,6 @@
+import { Category } from "../models/Category";
+import Task from "../models/Task";
 
-export type Task = {
-    id: number;
-    title: string;
-    date: string;
-    category: string;
-    completed: boolean;
-};
-
-export type Category = {
-    id: number;
-    name: string;
-    tasks: Task[];
-};
 
 
 
@@ -58,5 +47,19 @@ export const sampleCategories: Category[] = [
         ],
     },
     // ...more categories
+    {
+        id: 3,
+        name: "Shopping",
+        tasks: [
+            // ...tasks related to Shopping category
+            {
+                id: 5,
+                title: "Task 5",
+                date: "2023-05-10",
+                category: "Shopping",
+                completed: false,
+            },
+            ],
+    }
 ];
 

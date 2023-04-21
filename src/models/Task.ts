@@ -1,4 +1,4 @@
-export interface Tasks {
+export default interface Task {
     id: number;
     title: string;
     date: string;

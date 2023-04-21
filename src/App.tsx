@@ -15,43 +15,21 @@ import {
     Form, Button, Modal,
 } from "react-bootstrap";
 import "./App.css";
-import {useAppState} from "./controllers/AppState";
+//import {useAppState} from "./controllers/AppState";
 import {sampleCategories} from "./testing-data/sampleCategory";
 import {renderTasks} from "./controllers/RenderTasks";
 import {Category} from "./models/Category";
 import { useCategories } from "./controllers/OperationsTask";
 import { Categories } from "./controllers/Categories";
 
-import {Task} from "./testing-data/sampleCategory";
+
+import Task from "./models/Task";
+
 
 
 
 const App: React.FC = () => {
     const { categories, setCategories, deleteTask } = useCategories(sampleCategories);
-    /*const {
-        searchTerm,
-        setSearchTerm,
-        categories,
-        setCategories,
-        selectedCategory,
-        setSelectedCategory,
-        taskTitle,
-        setTaskTitle,
-        deadline,
-        setDeadline,
-        inputValidation,
-        setInputValidation,
-        handleTaskTitleChange,
-        handleDeadlineChange,
-        handleCategorySelect,
-        handleSearchInputChange,
-        validateInput,
-        clearInput,
-        addTaskHandler,
-        deleteTask,
-    } = useAppState();*/
-    // Search Bar
-    //const [searchTerm, setSearchTerm] = useState("");
 
     //const { categories, setCategories, addTask, deleteTask } = useCategories(sampleCategories);
     const { addTask } = useCategories(sampleCategories);
@@ -114,64 +92,21 @@ const App: React.FC = () => {
         if (!validateInput() || !selectedCategory) {
             return;
         }
-        const maxId = Math.max(...categories.flatMap(category => category.tasks.map(task => task.id)));
+        const maxId = Math.max(
+            ...categories.flatMap((category) =>
+                category.tasks.map((task: Task) => task.id)
+            )
+        );
         const newTask: Task = {
             id: maxId + 1,
             title: taskTitle,
             date: deadline,
             category: selectedCategory.name,
-            completed: false
+            completed: false,
         };
         addTask(selectedCategory.id, newTask);
         clearInput();
     };
-
-
-    // Categories
-
-
-    // ...other useState hooks, functions and event handlers
-    //const [searchTerm, setSearchTerm] = useState("");
-
-    //  TASK ADDING
-    /*const handleTaskTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTaskTitle(e.target.value);
-    };
-
-    const handleDeadlineChange = (date: Date | null) => {
-        if (date) {
-            setDeadline(date.toISOString().split("T")[0]);
-        } else {
-            setDeadline("");
-        }
-    };
-
-
-    const handleCategorySelect = (category: Category) => {
-        setSelectedCategory(category);
-    };
-
-    // Modal for adding new category visibility
-    const [categoryModalOpen, setCategoryModalOpen] = useState(false);
-
-
-
-
-
-
-    // END OF ADDING TASK
-
-    //DELETE TASK
-
-    // END OF DELETE TASK
-
-
-    const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
-    };*/
-
-
-
 
 
     return (
