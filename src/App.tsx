@@ -15,89 +15,118 @@ import {
     Form, Button, Modal,
 } from "react-bootstrap";
 import "./App.css";
+import {useAppState} from "./controllers/AppState";
+import {sampleCategories} from "./testing-data/sampleCategory";
+import {renderTasks} from "./controllers/RenderTasks";
+import {Category} from "./models/Category";
+import { useCategories } from "./controllers/OperationsTask";
+import { Categories } from "./controllers/Categories";
 
-type Task = {
-    id: number;
-    title: string;
-    date: string;
-    category: string;
-    completed: boolean;
-};
+import {Task} from "./testing-data/sampleCategory";
 
-type Category = {
-    id: number;
-    name: string;
-    tasks: Task[];
-};
-
-const sampleCategories: Category[] = [
-    {
-        id: 1,
-        name: "Work",
-        tasks: [
-            {
-                id: 1,
-                title: "Task 1",
-                date: "2023-05-01",
-                category: "Work",
-                completed: false,
-            },
-            {
-                id: 2,
-                title: "Task 2",
-                date: "2023-05-15",
-                category: "Work",
-                completed: true,
-            },
-        ],
-    },
-    {
-        id: 2,
-        name: "Personal",
-        tasks: [
-            // ...tasks related to Personal category
-            {
-                id: 3,
-                title: "Task 3",
-                date: "2023-05-10",
-                category: "Personal",
-                completed: false,
-            },
-            {
-                id: 4,
-                title: "Task 4",
-                date: "2023-05-20",
-                category: "Personal",
-                completed: false,
-            },
-        ],
-    },
-    // ...more categories
-];
 
 
 const App: React.FC = () => {
+    const { categories, setCategories, addTask, deleteTask } = useCategories(sampleCategories);
+    /*const {
+        searchTerm,
+        setSearchTerm,
+        categories,
+        setCategories,
+        selectedCategory,
+        setSelectedCategory,
+        taskTitle,
+        setTaskTitle,
+        deadline,
+        setDeadline,
+        inputValidation,
+        setInputValidation,
+        handleTaskTitleChange,
+        handleDeadlineChange,
+        handleCategorySelect,
+        handleSearchInputChange,
+        validateInput,
+        clearInput,
+        addTaskHandler,
+        deleteTask,
+    } = useAppState();*/
     // Search Bar
+    //const [searchTerm, setSearchTerm] = useState("");
+
+    //const { categories, setCategories, addTask, deleteTask } = useCategories(sampleCategories);
+
     const [searchTerm, setSearchTerm] = useState("");
+    //const [categories, setCategories] = useState<Category[]>(sampleCategories);
 
-    // Categories
-    const [categories, setCategories] = useState<Array<Category>>(sampleCategories);
-
-    // New Task Form ověřuje vstupní data
     const [taskTitle, setTaskTitle] = useState("");
     const [deadline, setDeadline] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [inputValidation, setInputValidation] = useState({
         taskTitle: true,
         deadline: true,
         category: true,
     });
 
+    /*const handleCategorySelect = (category: Category) => {
+        setSelectedCategory(category);
+    };*/
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+    // Modal for adding new category visibility
+    const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+
+    const handleTaskTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTaskTitle(e.target.value);
+    };
+
+    const handleDeadlineChange = (date: Date | null) => {
+        if (date) {
+            setDeadline(date.toISOString().split("T")[0]);
+        } else {
+            setDeadline("");
+        }
+    };
+
+    const handleCategorySelect = (category: Category) => {
+        setSelectedCategory(category);
+    };
+
+    const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const validateInput = () => {
+        const newValidation = {
+            taskTitle: taskTitle.length > 0,
+            deadline: deadline.length > 0,
+            category: !!selectedCategory,
+        };
+        setInputValidation(newValidation);
+        return Object.values(newValidation).every(Boolean);
+    };
+
+    const clearInput = () => {
+        setTaskTitle("");
+        setDeadline("");
+        setSelectedCategory(null);
+    };
+
+    const addTaskHandler = () => {
+        if (!validateInput() || !selectedCategory) {
+            return;
+        }
+        addTask(selectedCategory.id, { id: 5, //TODO: generate unique id
+            title: taskTitle,
+            date: deadline, category: selectedCategory.name, completed: false });
+
+        clearInput();
+    };
+    // Categories
+
+
     // ...other useState hooks, functions and event handlers
     //const [searchTerm, setSearchTerm] = useState("");
 
     //  TASK ADDING
-    const handleTaskTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    /*const handleTaskTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(e.target.value);
     };
 
@@ -118,159 +147,24 @@ const App: React.FC = () => {
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
 
-    const isFormValid = () => {
-        const taskTitleValid = taskTitle.trim().length > 0;
-        const deadlineValid = deadline.length > 0;
-        const categoryValid = selectedCategory !== null;
-
-        setInputValidation({
-            taskTitle: taskTitleValid,
-            deadline: deadlineValid,
-            category: categoryValid,
-        });
-
-        return taskTitleValid && deadlineValid && categoryValid;
-    };
-
-    const addTask = () => {
-
-        if (!isFormValid()) return;
-
-        // Find the index of the selected category in the categories array
-        const categoryIndex = categories.findIndex(
-            (category) => category.id === selectedCategory?.id
-        );
-
-        if (categoryIndex !== -1 && selectedCategory) {
-            // Generate a unique task ID
-            const newTaskId =
-                Math.max(...categories[categoryIndex].tasks.map((task) => task.id)) + 1;
-
-            // Create a new task object
-            const newTask: Task = {
-                id: newTaskId,
-                title: taskTitle,
-                date: deadline,
-                category: selectedCategory.name,
-                completed: false,
-            };
-
-            // Add the new task to the tasks array of the selected category
-            const updatedCategories = [...categories];
-            updatedCategories[categoryIndex].tasks = [
-                ...updatedCategories[categoryIndex].tasks,
-                newTask,
-            ];
-
-            // Update the categories state
-            setCategories(updatedCategories);
-
-            // Clear the input fields
-            setTaskTitle("");
-            setDeadline("");
-            setSelectedCategory(null);
-        }
 
 
-    };
+
 
     // END OF ADDING TASK
 
     //DELETE TASK
-    const deleteTask = (categoryId: number, taskId: number) => {
-        // Find the index of the category with the provided categoryId
-        const categoryIndex = categories.findIndex(
-            (category) => category.id === categoryId
-        );
 
-        if (categoryIndex !== -1) {
-            // Find the index of the task with the provided taskId
-            const taskIndex = categories[categoryIndex].tasks.findIndex(
-                (task) => task.id === taskId
-            );
-
-            if (taskIndex !== -1) {
-                // Remove the task from the tasks array of the selected category
-                const updatedCategories = [...categories];
-                updatedCategories[categoryIndex].tasks.splice(taskIndex, 1);
-
-                // Update the categories state
-                setCategories(updatedCategories);
-            }
-        }
-    };
     // END OF DELETE TASK
 
 
     const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
-    };
+    };*/
 
-    const renderCategories = () => {
-        /*let deleteTask = (categoryId: number, taskId: number) => {
-            console.log(`Deleting task ${taskId} from category ${categoryId}`);
 
-        }*/
-        return sampleCategories.map((category) => (
-            <Accordion key={category.id}>
-                <Card>
-                    <Accordion as={Card.Header} eventKey={category.id.toString()}>
-                        {category.name}
-                    </Accordion>
-                    {/*<Accordion.Collapse eventKey={category.id.toString()}>
-            <Card.Body>{renderTasks(category.tasks)}</Card.Body>
-          </Accordion.Collapse>*/}
-                    <Accordion.Item eventKey={category.id.toString()}>
-                        <Card.Body>{renderTasks(category.tasks, category.id, deleteTask)}</Card.Body>
-                    </Accordion.Item>
-                </Card>
-            </Accordion>
-        ));
-    };
 
-    const renderTasks = (
-        tasks: Task[],
-        categoryId: number,
-        deleteTask: (categoryId: number, taskId: number) => void
-    ) => {
-        return tasks.map((task) => (
-            <Card>
-                <Row key={task.id} className="task">
-                    <Col>
-                        <Form.Check
-                            type="checkbox"
-                            id={`task-checkbox-${task.id}`}
-                            className="task-checkbox"
-                            checked={task.completed}
-                            onChange={() => {
-                                // Handle checkbox change event
-                            }}
-                        />
-                    </Col>
-                    <Col>
-                        <Form.Label htmlFor={`task-checkbox-${task.id}`} className="task-title">
-                            {task.title}
-                        </Form.Label>
-                    </Col>
-                    <Col>
-                        <span className="task-date">{task.date}</span>
-                    </Col>
-                    <Col>
-                        <span className="task-category">{task.category}</span>
-                    </Col>
-                    <Col xs="auto">
-                        <Button
-                            variant="danger"
-                            onClick={() => deleteTask(categoryId, task.id)}
-                        >
-                            {/* Replace the text with a delete icon */}
-                            Delete
-                        </Button>
-                    </Col>
-                </Row>
-            </Card>
-        ));
-    };
+
 
     return (
 
@@ -290,7 +184,11 @@ const App: React.FC = () => {
             <Row className="main-content">
                 <Col>
                     {
-                        renderCategories()
+                        //renderCategories()
+                        //<Categories  />
+                        Categories()
+
+
                     }
                 </Col>
             </Row>
@@ -300,7 +198,11 @@ const App: React.FC = () => {
                 <Col>
                     <Form onSubmit={(e) => {
                         e.preventDefault();
-                        addTask();
+                        //addTask();
+                        if (selectedCategory) {
+                            const maxId = Math.max(...categories.flatMap(category => category.tasks.map(task => task.id)));
+                            addTask(selectedCategory?.id, {id: maxId+1, title: taskTitle, date: deadline, category: selectedCategory.name, completed: false});
+                        }
                     }}>
                         <Row>
                             <Col>
@@ -361,7 +263,7 @@ const App: React.FC = () => {
 
                             </Col>
                             <Col>
-                                <Button onClick={addTask}>Add Task</Button>
+                                <Button onClick={addTaskHandler}>Add Task</Button>
                             </Col>
                         </Row>
                     </Form>
