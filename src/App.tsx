@@ -27,7 +27,7 @@ import {Task} from "./testing-data/sampleCategory";
 
 
 const App: React.FC = () => {
-    const { categories, setCategories, addTask, deleteTask } = useCategories(sampleCategories);
+    const { categories, setCategories, deleteTask } = useCategories(sampleCategories);
     /*const {
         searchTerm,
         setSearchTerm,
@@ -54,6 +54,7 @@ const App: React.FC = () => {
     //const [searchTerm, setSearchTerm] = useState("");
 
     //const { categories, setCategories, addTask, deleteTask } = useCategories(sampleCategories);
+    const { addTask } = useCategories(sampleCategories);
 
     const [searchTerm, setSearchTerm] = useState("");
     //const [categories, setCategories] = useState<Category[]>(sampleCategories);
@@ -113,12 +114,19 @@ const App: React.FC = () => {
         if (!validateInput() || !selectedCategory) {
             return;
         }
-        addTask(selectedCategory.id, { id: 5, //TODO: generate unique id
+        const maxId = Math.max(...categories.flatMap(category => category.tasks.map(task => task.id)));
+        const newTask: Task = {
+            id: maxId + 1,
             title: taskTitle,
-            date: deadline, category: selectedCategory.name, completed: false });
-
+            date: deadline,
+            category: selectedCategory.name,
+            completed: false
+        };
+        addTask(selectedCategory.id, newTask);
         clearInput();
     };
+
+
     // Categories
 
 
@@ -200,8 +208,9 @@ const App: React.FC = () => {
                         e.preventDefault();
                         //addTask();
                         if (selectedCategory) {
-                            const maxId = Math.max(...categories.flatMap(category => category.tasks.map(task => task.id)));
-                            addTask(selectedCategory?.id, {id: maxId+1, title: taskTitle, date: deadline, category: selectedCategory.name, completed: false});
+                            /*const maxId = Math.max(...categories.flatMap(category => category.tasks.map(task => task.id)));
+                            addTask(selectedCategory?.id, {id: maxId+1, title: taskTitle, date: deadline, category: selectedCategory.name, completed: false});*/
+                            addTaskHandler();
                         }
                     }}>
                         <Row>
