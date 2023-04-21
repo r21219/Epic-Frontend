@@ -19,20 +19,18 @@ import "./App.css";
 import {sampleCategories} from "./testing-data/sampleCategory";
 import {renderTasks} from "./controllers/RenderTasks";
 import {Category} from "./models/Category";
-import { useCategories } from "./controllers/OperationsTask";
-import { Categories } from "./controllers/Categories";
+import {useCategories} from "./controllers/OperationsTask";
+import {Categories} from "./controllers/Categories";
 
 
 import Task from "./models/Task";
 
 
-
-
 const App: React.FC = () => {
-    const { categories, setCategories, deleteTask } = useCategories(sampleCategories);
+    const {categories, setCategories, deleteTask} = useCategories(sampleCategories);
 
     //const { categories, setCategories, addTask, deleteTask } = useCategories(sampleCategories);
-    const { addTask } = useCategories(sampleCategories);
+    const {addTask} = useCategories(sampleCategories);
 
     const [searchTerm, setSearchTerm] = useState("");
     //const [categories, setCategories] = useState<Category[]>(sampleCategories);
@@ -41,7 +39,7 @@ const App: React.FC = () => {
     const [deadline, setDeadline] = useState("");
     const [inputValidation, setInputValidation] = useState({
         taskTitle: true,
-        deadline: true,
+        //deadline: true,
         category: true,
     });
 
@@ -54,7 +52,12 @@ const App: React.FC = () => {
 
     const handleTaskTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(e.target.value);
+        setInputValidation((prevState) => ({
+            ...prevState,
+            taskTitle: e.target.value.trim().length > 0,
+        }));
     };
+
 
     const handleDeadlineChange = (date: Date | null) => {
         if (date) {
@@ -66,21 +69,34 @@ const App: React.FC = () => {
 
     const handleCategorySelect = (category: Category) => {
         setSelectedCategory(category);
+        setInputValidation((prevState) => ({ ...prevState, category: true }));
     };
+
 
     const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     };
 
-    const validateInput = () => {
+    /*const validateInput = () => {
         const newValidation = {
             taskTitle: taskTitle.length > 0,
-            deadline: deadline.length > 0,
+            //deadline: deadline.length > 0,
             category: !!selectedCategory,
         };
         setInputValidation(newValidation);
         return Object.values(newValidation).every(Boolean);
+    };*/
+    const validateInput = () => {
+        const validationResult = {
+            taskTitle: taskTitle.trim().length > 0,
+            category: selectedCategory !== null,
+        };
+
+        setInputValidation(validationResult);
+        return validationResult.taskTitle && validationResult.category;
     };
+
+
 
     const clearInput = () => {
         setTaskTitle("");
@@ -155,8 +171,10 @@ const App: React.FC = () => {
                                     placeholder="Task title"
                                     value={taskTitle}
                                     onChange={handleTaskTitleChange}
+                                    onBlur={() => setInputValidation((prevState) => ({ ...prevState, taskTitle: taskTitle.trim().length > 0 }))}
                                     isInvalid={!inputValidation.taskTitle}
                                 />
+
                             </Col>
                             <Col>
                                 {/* Date Picker */}
@@ -165,17 +183,24 @@ const App: React.FC = () => {
                                     onChange={handleDeadlineChange}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="Deadline"
-                                    className={`form-control ${!inputValidation.deadline ? "is-invalid" : ""}`}
+                                    //className={`form-control ${!inputValidation.deadline ? "is-invalid" : ""}`
+                                    className={`form-control`}
                                 />
 
                             </Col>
                             <Col>
                                 {/* Category Selector */}
-                                {/* Category Selector */}
                                 <Button onClick={() => setCategoryModalOpen(true)}>Category</Button>
-                                <span className="selected-category">
-                                    {selectedCategory ? `Selected Category: ${selectedCategory.name}` : ""}
-                                </span>
+                                <span
+                                    className={`selected-category ${
+                                        !inputValidation.category ? "is-invalid" : ""
+                                    }`}
+                                    onClick={() => {
+                                        validateInput();
+                                    }}
+                                >
+  {selectedCategory ? `Selected Category: ${selectedCategory.name}` : "Select Category"}
+</span>
                                 <Modal
                                     show={categoryModalOpen}
                                     onHide={() => setCategoryModalOpen(false)}
@@ -217,9 +242,6 @@ const App: React.FC = () => {
         </Container>
     );
 };
-
-
-
 
 
 export default App;

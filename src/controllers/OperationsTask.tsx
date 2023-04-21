@@ -18,19 +18,7 @@ export const useCategories = (initialCategories: Category[]) => {
         category: true,
     });
 
-    /*const isFormValid = () => {
-        const taskTitleValid = taskTitle.trim().length > 0;
-        const deadlineValid = deadline.length > 0;
-        const categoryValid = selectedCategory !== null;
 
-        setInputValidation({
-            taskTitle: taskTitleValid,
-            deadline: deadlineValid,
-            category: categoryValid,
-        });
-
-        return taskTitleValid && deadlineValid && categoryValid;
-    };*/
 
     const addTask = (categoryId: number, task: Task) => {
         // Find the index of the category with the provided categoryId

@@ -58,3 +58,7 @@
   margin-left: 10px;
   font-weight: bold;
 }
+
+span.is-invalid {
+  color: #dc3545;
+}
