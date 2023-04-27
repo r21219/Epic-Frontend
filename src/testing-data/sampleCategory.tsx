@@ -7,7 +7,7 @@ import Task from "../models/Task";
 export const sampleCategories: Category[] = [
     {
         id: 1,
-        name: "Work",
+        title: "Work",
         tasks: [
             {
                 id: 1,
@@ -27,7 +27,7 @@ export const sampleCategories: Category[] = [
     },
     {
         id: 2,
-        name: "Personal",
+        title: "Personal",
         tasks: [
             // ...tasks related to Personal category
             {
@@ -49,7 +49,7 @@ export const sampleCategories: Category[] = [
     // ...more categories
     {
         id: 3,
-        name: "Shopping",
+        title: "Shopping",
         tasks: [
             // ...tasks related to Shopping category
             {

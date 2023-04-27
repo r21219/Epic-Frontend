@@ -2,6 +2,6 @@ import Task from "./Task";
 
 export interface Category {
     id: number;
-    name: string;
+    title: string;
     tasks: Task[];
 }
