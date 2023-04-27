@@ -1,18 +1,27 @@
-import {Category} from "../../models/Category";
-import {Button} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+// /pages/categories/CategoryRow.tsx
+import React from "react";
+import { Category } from "../../models/Category";
+import TaskRow from "../tasks/TaskRow";
 
-const CategoryRow = (params: { category: Category }) => {
+interface CategoryRowProps {
+    category: Category;
+}
 
+const CategoryRow: React.FC<CategoryRowProps> = ({ category }) => {
     return (
-        <tr>
-            <td>{params.category.title}</td>
+        <>
+            <tr>
+                <td>{category.title}</td>
+                <td>
+                {category.tasks.map((task) => (
 
-            {/* <td>
-                <Button variant="info" className="me-2" onClick={() => goToDetail(params.band.id)}>Detail</Button>
-                <Button variant="danger" onClick={() => params.delete(params.band.id)}>Delete</Button>
-            </td>*/}
-        </tr>
+                    <TaskRow task={task} key={task.id} />
+
+                ))}
+                </td>
+            </tr>
+
+        </>
     );
 };
 

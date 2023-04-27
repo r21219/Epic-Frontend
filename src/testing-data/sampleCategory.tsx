@@ -12,14 +12,14 @@ export const sampleCategories: Category[] = [
             {
                 id: 1,
                 title: "Task 1",
-                date: "2023-05-01",
+                deadLine: "2023-05-01",
                 category: "Work",
                 completed: false,
             },
             {
                 id: 2,
                 title: "Task 2",
-                date: "2023-05-15",
+                deadLine: "2023-05-15",
                 category: "Work",
                 completed: true,
             },
@@ -33,14 +33,14 @@ export const sampleCategories: Category[] = [
             {
                 id: 3,
                 title: "Task 3",
-                date: "2023-05-10",
+                deadLine: "2023-05-10",
                 category: "Personal",
                 completed: false,
             },
             {
                 id: 4,
                 title: "Task 4",
-                date: "2023-05-20",
+                deadLine: "2023-05-20",
                 category: "Personal",
                 completed: false,
             },
@@ -55,7 +55,7 @@ export const sampleCategories: Category[] = [
             {
                 id: 5,
                 title: "Task 5",
-                date: "2023-05-10",
+                deadLine: "2023-05-10",
                 category: "Shopping",
                 completed: false,
             },
