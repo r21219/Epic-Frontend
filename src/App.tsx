@@ -122,7 +122,7 @@ const App: React.FC = () => {
         const newTask: Task = {
             id: maxId + 1,
             title: taskTitle,
-            deadLine: deadline,
+            deadLine: new Date(deadline),
             category: selectedCategory.title,
             completed: false,
         };
@@ -134,6 +134,7 @@ const App: React.FC = () => {
     return (
 
         <Categories/>
+
 
 
     );

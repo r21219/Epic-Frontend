@@ -29,6 +29,7 @@ const Categories = () => {
                 {categories.map((category) => (
                     <CategoryRow category={category} key={category.id} />
                 ))}
+
                 </tbody>
             </Table>
         </>

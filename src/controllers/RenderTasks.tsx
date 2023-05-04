@@ -34,7 +34,7 @@ const renderTasks = (
                     </Form.Label>
                 </Col>
                 <Col>
-                    <span className="task-date">{task.deadLine}</span>
+                    <span className="task-date">{task.deadLine.toString()}</span>
                 </Col>
                 <Col>
                     <span className="task-category">{task.category}</span>
