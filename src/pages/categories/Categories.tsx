@@ -23,13 +23,13 @@ const Categories = () => {
             ApiClient.createTask(newTask).then((task) => {
                 const updatedCategories = categories.slice();
                 const categoryIndex = updatedCategories.findIndex(
-                    (category) => category === task.category
+                    (category) => category.id === task.category.id
                 );
 
                 if (categoryIndex !== -1) {
                     updatedCategories[categoryIndex].tasks.push(task);
                     setCategories(updatedCategories);
-                    setNewTask(new NewTask("", null,task.category, false));
+                    setNewTask(new NewTask("", null, task.category, false));
                 } else {
                     console.error("Category not found");
                 }
@@ -38,6 +38,7 @@ const Categories = () => {
             console.error("Invalid input");
         }
     };
+
 
     return (
         <>
@@ -76,6 +77,17 @@ const Categories = () => {
                         <Form.Control
                             as="select"
                             value={newTask.category?.title}
+                            onChange={(e) => {
+                                const selectedCategory = categories.find(
+                                    (category) => category.title === e.target.value
+                                );
+                                if (selectedCategory) {
+                                    setNewTask((prevTask) => ({
+                                        ...prevTask,
+                                        category: selectedCategory,
+                                    }));
+                                }
+                            }}
                         >
                             {categories.map((category) => (
                                 <option key={category.id} value={category.title}>
@@ -83,7 +95,9 @@ const Categories = () => {
                                 </option>
                             ))}
                         </Form.Control>
+
                     </Form.Group>
+
 
                     <Form.Group controlId="deadline">
                         <Form.Label>Deadline</Form.Label>

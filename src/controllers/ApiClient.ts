@@ -33,8 +33,7 @@ export class ApiClient {
         const task = {
             title: newTask.title,
             deadLine: new Date(newTask.deadLine as Date),
-            //category: newTask.category,
-            category: new NewCategory(newTask.category.title) as Category,
+            category: newTask.category,
             completed: newTask.completed
         } as Task;
         const response = await fetch("http://localhost:8080/tasks",
@@ -49,8 +48,9 @@ export class ApiClient {
         if (response.ok) {
             return await response.json();
         }
-        throw new Error(await response.json());
+        throw new Error(await response.text());
     }
+
 
 
 }
