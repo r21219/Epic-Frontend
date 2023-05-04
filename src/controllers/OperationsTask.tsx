@@ -3,7 +3,7 @@ import {Accordion, Button, Card, Form, Modal, Stack, Table} from "react-bootstra
 
 //import {Category} from "../models/Category";
 //import { Category, Task, sampleCategories } from "../testing-data/sampleCategory";
-import {renderTasks} from "./RenderTasks";
+//import {renderTasks} from "./RenderTasks";
 import { Category } from "../models/Category";
 import Task from "../models/Task";
 

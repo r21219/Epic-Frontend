@@ -1,6 +1,7 @@
 import {Category} from "../models/Category";
 import {NewTask} from "../models/NewTask";
 import Task from "../models/Task";
+import {NewCategory} from "../models/NewCategory";
 
 
 export class ApiClient {
@@ -32,7 +33,8 @@ export class ApiClient {
         const task = {
             title: newTask.title,
             deadLine: new Date(newTask.deadLine as Date),
-            category: newTask.category,
+            //category: newTask.category,
+            category: new NewCategory(newTask.category.title) as Category,
             completed: newTask.completed
         } as Task;
         const response = await fetch("http://localhost:8080/tasks",

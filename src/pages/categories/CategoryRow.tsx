@@ -10,16 +10,16 @@ interface CategoryRowProps {
 const CategoryRow: React.FC<CategoryRowProps> = ({ category }) => {
     return (
         <>
-            <tr>
-                <td>{category.title}</td>
-                <td>
+
+                {category.title}
+
                 {category.tasks.map((task) => (
 
                     <TaskRow task={task} key={task.id} />
 
                 ))}
-                </td>
-            </tr>
+
+
 
         </>
     );
