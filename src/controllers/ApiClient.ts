@@ -29,14 +29,14 @@ export class ApiClient {
         throw new Error(await response.json());
     }
 
-    public static async createTask(newTask: NewTask): Promise<Task> {
+    public static async createTask(categoryId: number,newTask: NewTask): Promise<Category> {
         const task = {
             title: newTask.title,
             deadLine: new Date(newTask.deadLine as Date),
             category: newTask.category,
             completed: newTask.completed
         } as Task;
-        const response = await fetch("http://localhost:8080/tasks",
+        const response = await fetch("http://localhost:8080/categories/add/"+categoryId,
             {
                 method: "POST",
                 body: JSON.stringify(task),

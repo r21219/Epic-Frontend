@@ -20,25 +20,20 @@ const Categories = () => {
     }, []);
     const createTask = () => {
         if (newTask.title.trim().length > 0 && newTask.category) {
-            ApiClient.createTask(newTask).then((task) => {
-                const updatedCategories = categories.slice();
-                const categoryIndex = updatedCategories.findIndex(
-                    (category) => category.id === task.category.id
+            ApiClient.createTask(newTask.category.id, newTask).then((category) => {
+                console.log("Received category:", category);
+
+                const updatedCategories = categories.map((existingCategory) =>
+                    existingCategory.id === category.id ? category : existingCategory
                 );
 
-                if (categoryIndex !== -1) {
-                    updatedCategories[categoryIndex].tasks.push(task);
-                    setCategories(updatedCategories);
-                    setNewTask(new NewTask("", null, task.category, false));
-                } else {
-                    console.error("Category not found");
-                }
+                setCategories(updatedCategories);
+                setNewTask(new NewTask("", null, new NewCategory("") as Category, false));
             });
         } else {
             console.error("Invalid input");
         }
     };
-
 
     return (
         <>

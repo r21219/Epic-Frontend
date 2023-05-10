@@ -24,9 +24,9 @@ const TaskRow: React.FC<TaskRowProps> = ({ task }) => {
         setTitleClass("Halo");
         setDeadLineClass(null);
         if(newTask.title.trim().length > 0 && newTask.category ){
-            ApiClient.createTask(newTask).then(task => {
+            ApiClient.createTask(newTask.category.id,newTask).then(task => {
                 const tasksCopy = tasks.slice();
-                tasksCopy.push(task);
+                //tasksCopy.push(task);
                 setTasks(tasksCopy);
                 setNewTask(new NewTask("", null, new NewCategory("") as Category, false));
                 //print in console
