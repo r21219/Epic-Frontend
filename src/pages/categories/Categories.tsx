@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { ApiClient } from "../../controllers/ApiClient";
 import { Category } from "../../models/Category";
-import {Button, Container, DropdownButton, Form, FormControl, InputGroup, Modal, Stack, Table} from "react-bootstrap";
+import {Accordion, Button, Container, DropdownButton, Form, FormControl, InputGroup, Modal, Stack, Table} from "react-bootstrap";
 import CategoryRow from "./CategoryRow";
 import TaskRow from "../tasks/TaskRow";
 import {NewTask} from "../../models/NewTask";
@@ -48,9 +48,16 @@ const Categories = () => {
                     Task
                     Deadline
 
-                {categories.map((category) => (
-                    <CategoryRow category={category} key={category.id} />
-                ))}
+                <Accordion>
+                    {categories.map((category) => (
+                        <Accordion.Item eventKey={category.id.toString()} key={category.id}>
+                            <Accordion.Header>{category.title}</Accordion.Header>
+                            <Accordion.Body>
+                                    <CategoryRow category={category} key={category.id}/>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    ))}
+                </Accordion>
 
 
 

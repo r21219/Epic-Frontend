@@ -6,6 +6,7 @@ import {ApiClient} from "../../controllers/ApiClient";
 import {NewTask} from "../../models/NewTask";
 import {Button} from "react-bootstrap";
 import {NewCategory} from "../../models/NewCategory";
+import { AiOutlineDelete } from 'react-icons/ai';
 
 interface TaskRowProps {
     task: Task;
@@ -16,10 +17,15 @@ const TaskRow: React.FC<TaskRowProps> = ({ task }) => {
     const [newTask, setNewTask] = useState<NewTask>(new NewTask("", null,new NewCategory("") as Category, false));
     const [titleClass, setTitleClass] = useState<string>("");
     const [deadLineClass, setDeadLineClass] = useState<Date | null>(null);
-    useEffect(() => {
-        ApiClient.getTasks().then((data) => setTasks(data));
-    }, []);
 
+    const formatDate = (dateString: string): string => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+
+        return `${day}.${month}.${year}`;
+    };
     const createTask = () : void =>{
         setTitleClass("Halo");
         setDeadLineClass(null);
@@ -46,11 +52,11 @@ const TaskRow: React.FC<TaskRowProps> = ({ task }) => {
     return (
         <>
 
-            {task.title}
-            {task.deadLine.toString()}
-            {<Button variant="success" onClick={createTask}>
-                CreateTask
-            </Button>}
+            <div className="task-row">
+                <div className="col">{task.title}</div>
+                <div className="col">{"Due date: "}{formatDate(task.deadLine.toString())}</div>
+                <Button variant="danger" onClick={createTask}><AiOutlineDelete /> {/* Trash can icon */}</Button>
+            </div>
             <br/>
 
 
