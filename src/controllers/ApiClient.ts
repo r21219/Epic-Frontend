@@ -13,16 +13,23 @@ export class ApiClient {
         throw new Error(await response.json());
     }
 
-    public static async getTasks(): Promise<Task[]> {
-        const response = await fetch("http://localhost:8080/tasks");
+    public static async getCategory(id: number): Promise<Category> {
+        const response = await fetch("http://localhost:8080/categories/" + id);
         if (response.ok) {
             return await response.json();
         }
         throw new Error(await response.json());
     }
 
-    public static async getCategory(id: number): Promise<Category> {
-        const response = await fetch("http://localhost:8080/categories/" + id);
+    public static async deleteTask(id: number): Promise<Category> {
+        const response = await fetch("http://localhost:8080/categories/del/" + id,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            });
         if (response.ok) {
             return await response.json();
         }
