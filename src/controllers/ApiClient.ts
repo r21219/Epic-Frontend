@@ -18,6 +18,13 @@ export class ApiClient {
         }
         throw new Error(await response.json());
     }
+    public static async getSortedTasks(categoryId: number,sortType: number): Promise<Task[]>{
+        const response = await fetch("http://localhost:8080/tasks/sort/" + categoryId + "/" +sortType);
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.json());
+    }
     public static async getSearchedCategories(title: string): Promise<Category[]>{
         const response = await fetch("http://localhost:8080/categories/search/" + title);
         if (response.ok) {
@@ -69,7 +76,28 @@ export class ApiClient {
         }
         throw new Error(await response.text());
     }
-
+    public static async updateTask(updatedTask: Task): Promise<Task> {
+        const task = {
+            id: updatedTask.id,
+            title: updatedTask.title,
+            deadLine: new Date(updatedTask.deadLine as Date),
+            category: updatedTask.category,
+            completed: updatedTask.completed
+        } as Task;
+        const response = await fetch("http://localhost:8080/tasks",
+            {
+                method: "PUT",
+                body: JSON.stringify(task),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            });
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.text());
+    }
 
 
 }

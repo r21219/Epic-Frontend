@@ -1,18 +1,21 @@
 import React, { createContext, useState } from 'react';
 import {Category} from "../models/Category";
+import Task from "../models/Task";
 
 interface CategoryProviderProps {
     children: React.ReactNode;
 }
 
-interface CategoryContextType {
+interface CategoryContextProps {
     categories: Category[];
     updateCategories: (updatedCategories: Category[]) => void;
+    updateTasks: (categoryId: number, updatedTasks: Task[]) => void;
 }
 
-export const CategoryContext = createContext<CategoryContextType>({
+export const CategoryContext = createContext<CategoryContextProps>({
     categories: [],
-    updateCategories: () => {}
+    updateCategories: () => {},
+    updateTasks: () => {},
 });
 
 export const CategoryProvider: React.FC<CategoryProviderProps> = ({ children }) => {
@@ -22,8 +25,16 @@ export const CategoryProvider: React.FC<CategoryProviderProps> = ({ children }) 
         setCategories(updatedCategories);
     };
 
+    const updateTasks = (categoryId: number, updatedTasks: Task[]) => {
+        setCategories((prevCategories) => {
+            return prevCategories.map((category) =>
+                category.id === categoryId ? { ...category, tasks: updatedTasks } : category
+            );
+        });
+    };
+
     return (
-        <CategoryContext.Provider value={{ categories, updateCategories }}>
+        <CategoryContext.Provider value={{ categories, updateCategories, updateTasks }}>
             {children}
         </CategoryContext.Provider>
     );

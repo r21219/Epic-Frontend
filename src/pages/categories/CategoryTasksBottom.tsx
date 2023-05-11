@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import { ApiClient } from "../../controllers/ApiClient";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { NewTask } from "../../models/NewTask";
 import DatePicker from "react-datepicker";
 import { NewCategory } from "../../models/NewCategory";
-import {Category} from "../../models/Category";
-import {CategoryContext} from "../../Contexts/CategoryContext";
+import { Category } from "../../models/Category";
+import { CategoryContext } from "../../Contexts/CategoryContext";
 
 const CategoryTasksBottom = () => {
-    const { categories, updateCategories } = useContext(CategoryContext);
+    const { categories, updateCategories, updateTasks } = useContext(CategoryContext);
     const [newTask, setNewTask] = useState<NewTask>(
         new NewTask("", null, new NewCategory("") as Category, false)
     );
@@ -16,14 +16,11 @@ const CategoryTasksBottom = () => {
     const createTask = () => {
         if (newTask.title.trim().length > 0 && newTask.category) {
             ApiClient.createTask(newTask.category.id, newTask).then((category) => {
-                const updatedCategories = categories.map((existingCategory) =>
+                updateTasks(category.id, category.tasks);
+                updateCategories(categories.map((existingCategory) =>
                     existingCategory.id === category.id ? category : existingCategory
-                );
-
-                updateCategories(updatedCategories);
-                setNewTask(
-                    new NewTask("", null, new NewCategory("") as Category, false)
-                );
+                ));
+                setNewTask(new NewTask("", null, new NewCategory("") as Category, false));
             });
         } else {
             console.error("Invalid input");
@@ -31,12 +28,14 @@ const CategoryTasksBottom = () => {
     };
 
     return (
-        <>
-            <Form>
-                <div className="row">
-                    <div className="col-md">
-                        <Form.Group controlId="title">
+        <div className="position-fixed bottom-0 start-50 translate-middle-x">
+            <div className="bg-light p-3">
+                <Form>
+                    <Row className="g-3 align-items-center">
+                        <Col md="auto">
                             <Form.Label>Title:</Form.Label>
+                        </Col>
+                        <Col>
                             <Form.Control
                                 type="text"
                                 placeholder="Enter task title"
@@ -48,26 +47,27 @@ const CategoryTasksBottom = () => {
                                     }))
                                 }
                             />
-                        </Form.Group>
-                    </div>
+                        </Col>
 
-                    <div className="col-md">
-                        <Form.Group controlId="deadline">
+                        <Col md="auto">
                             <Form.Label>Date:</Form.Label>
+                        </Col>
+                        <Col>
                             <DatePicker
                                 selected={newTask.deadLine}
                                 onChange={(date: Date) =>
                                     setNewTask((prevTask) => ({ ...prevTask, deadLine: date }))
                                 }
-                                dateFormat="yyyy-MM-dd"
+                                dateFormat="dd-MM-yyyy"
                                 placeholderText="Select deadline"
+                                className="form-control"
                             />
-                        </Form.Group>
-                    </div>
+                        </Col>
 
-                    <div className="col-md">
-                        <Form.Group controlId="category">
+                        <Col md="auto">
                             <Form.Label>Category:</Form.Label>
+                        </Col>
+                        <Col>
                             <Form.Control
                                 as="select"
                                 value={newTask.category?.title}
@@ -89,19 +89,17 @@ const CategoryTasksBottom = () => {
                                     </option>
                                 ))}
                             </Form.Control>
-                        </Form.Group>
-                    </div>
+                        </Col>
 
-                    <div className="col-md">
-                        <div className="d-flex align-items-center">
+                        <Col md="auto">
                             <Button variant="primary" type="button" onClick={createTask}>
                                 Create Task
                             </Button>
-                        </div>
-                    </div>
-                </div>
-            </Form>
-        </>
+                        </Col>
+                    </Row>
+                </Form>
+            </div>
+        </div>
     );
 };
 
