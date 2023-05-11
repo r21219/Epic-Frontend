@@ -4,18 +4,19 @@ import { Accordion, Container } from "react-bootstrap";
 import CategoryRow from "./CategoryRow";
 import CategoryTasksBottom from "./CategoryTasksBottom";
 import {CategoryContext} from "../../Contexts/CategoryContext";
+import CategoriesSort from "./CategoriesSort";
 
 const Categories = () => {
     const { categories, updateCategories } = useContext(CategoryContext);
 
     useEffect(() => {
         ApiClient.getCategories().then((data) => updateCategories(data));
-    }, );
+    }, []);
 
     return (
         <Container fluid className="app-container">
             <h2>Categories</h2>
-
+            <CategoriesSort/>
             <Accordion>
                 {categories.map((category) => (
                     <Accordion.Item eventKey={category.id.toString()} key={category.id}>

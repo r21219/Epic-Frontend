@@ -11,6 +11,13 @@ export class ApiClient {
         }
         throw new Error(await response.json());
     }
+    public static async getSortedCategories(sortType: number): Promise<Category[]>{
+        const response = await fetch("http://localhost:8080/categories/sort/" + sortType);
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.json());
+    }
 
     public static async getCategory(id: number): Promise<Category> {
         const response = await fetch("http://localhost:8080/categories/" + id);
