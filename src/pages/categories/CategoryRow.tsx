@@ -1,5 +1,4 @@
 // /pages/categories/CategoryRow.tsx
-import React, {useState} from "react";
 import {Category} from "../../models/Category";
 import TaskRow from "../tasks/TaskRow";
 

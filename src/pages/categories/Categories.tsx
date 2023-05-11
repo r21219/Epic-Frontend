@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect} from "react";
 import { ApiClient } from "../../controllers/ApiClient";
-import { Category } from "../../models/Category";
 import { Accordion, Container } from "react-bootstrap";
 import CategoryRow from "./CategoryRow";
 import CategoryTasksBottom from "./CategoryTasksBottom";
@@ -11,7 +10,7 @@ const Categories = () => {
 
     useEffect(() => {
         ApiClient.getCategories().then((data) => updateCategories(data));
-    }, []);
+    }, );
 
     return (
         <Container fluid className="app-container">

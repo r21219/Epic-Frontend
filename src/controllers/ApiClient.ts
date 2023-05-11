@@ -1,7 +1,6 @@
 import {Category} from "../models/Category";
 import {NewTask} from "../models/NewTask";
 import Task from "../models/Task";
-import {NewCategory} from "../models/NewCategory";
 
 
 export class ApiClient {
@@ -36,7 +35,7 @@ export class ApiClient {
         throw new Error(await response.json());
     }
 
-    public static async createTask(categoryId: number,newTask: NewTask): Promise<Category> {
+    public static async createTask(categoryId: number, newTask: NewTask): Promise<Category> {
         const task = {
             title: newTask.title,
             deadLine: new Date(newTask.deadLine as Date),

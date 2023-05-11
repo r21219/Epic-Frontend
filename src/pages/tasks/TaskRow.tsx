@@ -1,11 +1,8 @@
 // /pages/categories/TaskRow.tsx
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import Task from "../../models/Task";
-import {Category} from "../../models/Category";
 import {ApiClient} from "../../controllers/ApiClient";
-import {NewTask} from "../../models/NewTask";
 import {Button} from "react-bootstrap";
-import {NewCategory} from "../../models/NewCategory";
 import {AiOutlineDelete} from 'react-icons/ai';
 import {CategoryContext} from "../../Contexts/CategoryContext";
 
