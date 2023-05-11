@@ -18,7 +18,13 @@ export class ApiClient {
         }
         throw new Error(await response.json());
     }
-
+    public static async getSearchedCategories(title: string): Promise<Category[]>{
+        const response = await fetch("http://localhost:8080/categories/search/" + title);
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.json());
+    }
     public static async getCategory(id: number): Promise<Category> {
         const response = await fetch("http://localhost:8080/categories/" + id);
         if (response.ok) {
