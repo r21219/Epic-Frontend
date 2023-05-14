@@ -5,5 +5,5 @@ export default interface Task {
     title: string;
     deadLine: Date;
     category: Category;
-    completed: boolean;
+    complete: boolean;
 }

@@ -60,7 +60,6 @@ export class ApiClient {
             title: newTask.title,
             deadLine: new Date(newTask.deadLine as Date),
             category: newTask.category,
-            completed: newTask.completed
         } as Task;
         const response = await fetch("http://localhost:8080/categories/add/"+categoryId,
             {
@@ -82,7 +81,7 @@ export class ApiClient {
             title: updatedTask.title,
             deadLine: new Date(updatedTask.deadLine as Date),
             category: updatedTask.category,
-            completed: updatedTask.completed
+            complete: updatedTask.complete
         } as Task;
         const response = await fetch("http://localhost:8080/tasks",
             {

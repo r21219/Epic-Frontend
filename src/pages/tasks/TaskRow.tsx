@@ -13,9 +13,9 @@ interface TaskRowProps {
 }
 
 const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
-    const { categories, updateCategories,updateTasks } = useContext(CategoryContext);
+    const { categories, updateCategories, updateTasks } = useContext(CategoryContext);
     const [editing, setEditing] = useState(false);
-    const [editedTask, setEditedTask] = useState({ ...task });
+    const [editedTask, setEditedTask] = useState({ ...task});
 
     const formatDate = (dateString: string): string => {
         const date = new Date(dateString);
@@ -31,7 +31,7 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
             const updatedCategories = categories.map((existingCategory) =>
                 existingCategory.id === category.id ? category : existingCategory
             );
-            updateTasks(category.id,category.tasks)
+            updateTasks(category.id, category.tasks);
             updateCategories(updatedCategories);
         });
     };
@@ -41,13 +41,17 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setEditedTask((prevTask) => ({ ...prevTask, [name]: value }));
+        const { name, value} = event.target;
+
+        setEditedTask((prevTask) => ({
+            ...prevTask,
+            [name]: value,
+        }));
     };
 
     const handleSave = () => {
         ApiClient.updateTask(editedTask).then(() => {
-            fetchCategoryInformation(categoryId)
+            fetchCategoryInformation(categoryId);
             setEditing(false);
         });
     };
@@ -61,6 +65,16 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
             updateCategories(updatedCategories);
         });
     };
+
+    const toggleCompleted = () => {
+        setEditedTask((prevTask) => ({
+            ...prevTask,
+            complete: !prevTask.complete,
+        }));
+        console.log(editedTask.complete)
+    };
+
+
 
     return (
         <>
@@ -86,11 +100,20 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
                                 className="form-control"
                             />
                         </div>
+                        <div className="col">
+                            <Button
+                                variant={editedTask.complete ? "success" : "outline-success"}
+                                onClick={toggleCompleted}
+                            >
+                                {editedTask.complete ? "Completed" : "Mark as Completed"}
+                            </Button>
+                        </div>
                     </>
                 ) : (
                     <>
                         <div className="col">{task.title}</div>
                         <div className="col">Due date: {formatDate(task.deadLine.toString())}</div>
+                        <div className="col">Status: {task.complete ? "Completed" : "Incomplete"} </div>
                     </>
                 )}
                 <Button variant="danger" onClick={() => deleteTask(task.id)}>
@@ -110,5 +133,4 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
         </>
     );
 };
-
 export default TaskRow;
