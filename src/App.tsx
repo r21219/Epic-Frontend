@@ -8,12 +8,13 @@ import UserLogin from  "./pages/users/UserLogin";
 import {UserContext} from "./Contexts/UserContext";
 
 const App = () => {
+    /*
     const userContext = useContext(UserContext);
 
     if (!userContext || !userContext.user) {
         return <UserLogin />;
     }
-
+*/
     return (
         <Container fluid className="app-container">
             <Categories />
