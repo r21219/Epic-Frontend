@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import Categories from "./pages/categories/Categories";
 import UserLogin from  "./pages/users/UserLogin";
 import {UserContext} from "./Contexts/UserContext";
+import categories from "./pages/categories/Categories";
 
 const App = () => {
     /*

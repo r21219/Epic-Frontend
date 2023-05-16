@@ -1,3 +1,4 @@
+export {}
 
 const UserRegister: React.FC = () => {
    return(

@@ -62,3 +62,14 @@
 span.is-invalid {
   color: #dc3545;
 }
+
+/*.accordion-header {
+  position:relative;
+}*/
+
+.btn-edit-category {
+  margin-left: 1rem;
+}
+.search-bar {
+  z-index: 1000;
+}

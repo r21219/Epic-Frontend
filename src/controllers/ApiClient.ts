@@ -98,5 +98,27 @@ export class ApiClient {
         throw new Error(await response.text());
     }
 
+    //updateCategory
+    public static async updateCategory(updatedCategory: Category): Promise<Category> {
+        const category = {
+            id: updatedCategory.id,
+            title: updatedCategory.title,
+            tasks: updatedCategory.tasks,
+        } as Category;
+        const response = await fetch("http://localhost:8080/categories",
+            {
+                method: "PUT",
+                body: JSON.stringify(category),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            });
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.text());
+    }
+
 
 }
