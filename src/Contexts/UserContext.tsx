@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, {createContext, useState} from 'react';
 import User from "../models/User";
 
 interface UserContextType {
@@ -9,11 +9,13 @@ interface UserContextType {
 
 export const UserContext = createContext<UserContextType>({
     user: null,
-    login: () => {},
-    logout: () => {},
+    login: () => {
+    },
+    logout: () => {
+    },
 });
 
-export const UserProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export const UserProvider: React.FC<React.PropsWithChildren<{}>> = ({children}) => {
     const [user, setUser] = useState<User | null>(null);
 
     const login = (userData: User) => {
@@ -25,7 +27,7 @@ export const UserProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
     };
 
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider value={{user, login, logout}}>
             {children}
         </UserContext.Provider>
     );

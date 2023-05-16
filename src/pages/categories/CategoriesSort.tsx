@@ -18,7 +18,6 @@ const CategoriesSort = () => {
     };
 
 
-
     //handleSearch without async/await
     const handleSearch = (searchValue: string) => {
         if (searchValue.trim() === '') {
@@ -31,7 +30,6 @@ const CategoriesSort = () => {
     const handleSearchButtonClick = () => {
         handleSearch(searchTerm);
     };
-
 
 
     const handleReset = async () => {
@@ -89,10 +87,22 @@ const CategoriesSort = () => {
 
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => {handleSort(0); setSelectedItem('Title Asc (A–Z)')}}>Title Asc (A–Z)</Dropdown.Item>
-                                <Dropdown.Item onClick={() => {handleSort(1); setSelectedItem('Title Desc (Z–A)')}}>Title Desc (Z–A)</Dropdown.Item>
-                                <Dropdown.Item onClick={() => {handleSort(2); setSelectedItem('Task Count Asc (0–10)')}}>Task Count Asc (0–10)</Dropdown.Item>
-                                <Dropdown.Item onClick={() => {handleSort(3); setSelectedItem('Task Count Desc (10–0)')}}>Task Count Desc (10–0)</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {
+                                    handleSort(0);
+                                    setSelectedItem('Title Asc (A–Z)')
+                                }}>Title Asc (A–Z)</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {
+                                    handleSort(1);
+                                    setSelectedItem('Title Desc (Z–A)')
+                                }}>Title Desc (Z–A)</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {
+                                    handleSort(2);
+                                    setSelectedItem('Task Count Asc (0–10)')
+                                }}>Task Count Asc (0–10)</Dropdown.Item>
+                                <Dropdown.Item onClick={() => {
+                                    handleSort(3);
+                                    setSelectedItem('Task Count Desc (10–0)')
+                                }}>Task Count Desc (10–0)</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>

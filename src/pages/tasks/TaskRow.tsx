@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, {useState, useContext} from "react";
 import Task from "../../models/Task";
-import { ApiClient } from "../../controllers/ApiClient";
-import { Button, Form } from "react-bootstrap";
-import { AiOutlineDelete } from "react-icons/ai";
-import { CategoryContext } from "../../Contexts/CategoryContext";
+import {ApiClient} from "../../controllers/ApiClient";
+import {Button, Form} from "react-bootstrap";
+import {AiOutlineDelete} from "react-icons/ai";
+import {CategoryContext} from "../../Contexts/CategoryContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -12,10 +12,10 @@ interface TaskRowProps {
     categoryId: number;
 }
 
-const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
-    const { categories, updateCategories, updateTasks } = useContext(CategoryContext);
+const TaskRow: React.FC<TaskRowProps> = ({task, categoryId}) => {
+    const {categories, updateCategories, updateTasks} = useContext(CategoryContext);
     const [editing, setEditing] = useState(false);
-    const [editedTask, setEditedTask] = useState({ ...task});
+    const [editedTask, setEditedTask] = useState({...task});
 
     const formatDate = (dateString: string): string => {
         const date = new Date(dateString);
@@ -41,7 +41,7 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value} = event.target;
+        const {name, value} = event.target;
 
         setEditedTask((prevTask) => ({
             ...prevTask,
@@ -74,7 +74,6 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
     };
 
 
-
     return (
         <>
             <div className="task-row">
@@ -92,7 +91,7 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
                             <DatePicker
                                 selected={new Date(editedTask.deadLine)}
                                 onChange={(date: Date) =>
-                                    setEditedTask((prevTask) => ({ ...prevTask, deadLine: date }))
+                                    setEditedTask((prevTask) => ({...prevTask, deadLine: date}))
                                 }
                                 dateFormat="yyyy-MM-dd"
                                 placeholderText="Select deadline"
@@ -116,7 +115,7 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
                     </>
                 )}
                 <Button variant="danger" onClick={() => deleteTask(task.id)}>
-                    <AiOutlineDelete /> {/* Trash can icon */}
+                    <AiOutlineDelete/> {/* Trash can icon */}
                 </Button>
                 {editing ? (
                     <Button variant="primary" onClick={handleSave}>
@@ -128,7 +127,7 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
                     </Button>
                 )}
             </div>
-            <br />
+            <br/>
         </>
     );
 };

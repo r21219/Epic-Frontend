@@ -12,31 +12,49 @@ export class ApiClient {
         }
         throw new Error(await response.json());
     }
-    public static async getSortedCategories(sortType: number): Promise<Category[]>{
+
+    public static async getSortedCategories(sortType: number): Promise<Category[]> {
         const response = await fetch("http://localhost:8080/categories/sort/" + sortType);
         if (response.ok) {
             return await response.json();
         }
         throw new Error(await response.json());
     }
-    public static async getSortedTasks(categoryId: number,sortType: number): Promise<Task[]>{
-        const response = await fetch("http://localhost:8080/tasks/sort/" + categoryId + "/" +sortType);
+
+    public static async getSortedTasks(categoryId: number, sortType: number): Promise<Task[]> {
+        const response = await fetch("http://localhost:8080/tasks/sort/" + categoryId + "/" + sortType);
         if (response.ok) {
             return await response.json();
         }
         throw new Error(await response.json());
     }
-    public static async getSearchedCategories(title: string): Promise<Category[]>{
+
+    public static async getSearchedCategories(title: string): Promise<Category[]> {
         const response = await fetch("http://localhost:8080/categories/search/" + title);
         if (response.ok) {
             return await response.json();
         }
         throw new Error(await response.json());
     }
+
     public static async getCategory(id: number): Promise<Category> {
         const response = await fetch("http://localhost:8080/categories/" + id);
         if (response.ok) {
             return await response.json();
+        }
+        throw new Error(await response.json());
+    }
+    public static async deleteCategory(id: number){
+        const response = await fetch("http://localhost:8080/categories/" + id,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            });
+        if (response.ok) {
+            return;
         }
         throw new Error(await response.json());
     }
@@ -62,7 +80,7 @@ export class ApiClient {
             deadLine: new Date(newTask.deadLine as Date),
             category: newTask.category,
         } as Task;
-        const response = await fetch("http://localhost:8080/categories/add/"+categoryId,
+        const response = await fetch("http://localhost:8080/categories/add/" + categoryId,
             {
                 method: "POST",
                 body: JSON.stringify(task),
@@ -76,6 +94,7 @@ export class ApiClient {
         }
         throw new Error(await response.text());
     }
+
     public static async updateTask(updatedTask: Task): Promise<Task> {
         const task = {
             id: updatedTask.id,
@@ -121,21 +140,31 @@ export class ApiClient {
         throw new Error(await response.text());
     }
 
-    public static async createUser(newUser: User): Promise<User> {
+    public static async createUser(newUserName: String, password: String){
+        const user = {
+            name: newUserName,
+            password: password
+        }as User
         const response = await fetch("http://localhost:8080/users",
             {
                 method: "POST",
-                body: JSON.stringify(newUser),
+                body: JSON.stringify(user),
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                 }
             });
         if (response.ok) {
-            return await response.json();
+            return;
         }
         throw new Error(await response.text());
     }
 
-
+    public static async loginUser(userName: String, password: String): Promise<User> {
+        const response = await fetch("http://localhost:8080/users/" + userName + "/" + password);
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.json());
+    }
 }

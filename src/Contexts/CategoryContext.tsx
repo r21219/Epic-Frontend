@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, {createContext, useState} from 'react';
 import Task from "../models/Task";
 import Category from "../models/Category";
 
@@ -14,11 +14,13 @@ interface CategoryContextProps {
 
 export const CategoryContext = createContext<CategoryContextProps>({
     categories: [],
-    updateCategories: () => {},
-    updateTasks: () => {},
+    updateCategories: () => {
+    },
+    updateTasks: () => {
+    },
 });
 
-export const CategoryProvider: React.FC<CategoryProviderProps> = ({ children }) => {
+export const CategoryProvider: React.FC<CategoryProviderProps> = ({children}) => {
     const [categories, setCategories] = useState<Category[]>([]);
 
     const updateCategories = (updatedCategories: Category[]) => {
@@ -28,13 +30,13 @@ export const CategoryProvider: React.FC<CategoryProviderProps> = ({ children }) 
     const updateTasks = (categoryId: number, updatedTasks: Task[]) => {
         setCategories((prevCategories) => {
             return prevCategories.map((category) =>
-                category.id === categoryId ? { ...category, tasks: updatedTasks } : category
+                category.id === categoryId ? {...category, tasks: updatedTasks} : category
             );
         });
     };
 
     return (
-        <CategoryContext.Provider value={{ categories, updateCategories, updateTasks }}>
+        <CategoryContext.Provider value={{categories, updateCategories, updateTasks}}>
             {children}
         </CategoryContext.Provider>
     );

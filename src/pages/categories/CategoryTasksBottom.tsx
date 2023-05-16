@@ -1,14 +1,14 @@
-import { useContext, useState } from "react";
-import { ApiClient } from "../../controllers/ApiClient";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import { NewTask } from "../../models/NewTask";
+import {useContext, useState} from "react";
+import {ApiClient} from "../../controllers/ApiClient";
+import {Form, Button, Row, Col} from "react-bootstrap";
+import {NewTask} from "../../models/NewTask";
 import DatePicker from "react-datepicker";
-import { NewCategory } from "../../models/NewCategory";
-import { CategoryContext } from "../../Contexts/CategoryContext";
+import {NewCategory} from "../../models/NewCategory";
+import {CategoryContext} from "../../Contexts/CategoryContext";
 import Category from "../../models/Category";
 
 const CategoryTasksBottom = () => {
-    const { categories, updateCategories, updateTasks } = useContext(CategoryContext);
+    const {categories, updateCategories, updateTasks} = useContext(CategoryContext);
     const [newTask, setNewTask] = useState<NewTask>(
         new NewTask("", null, new NewCategory("") as Category, false)
     );
@@ -56,7 +56,7 @@ const CategoryTasksBottom = () => {
                             <DatePicker
                                 selected={newTask.deadLine}
                                 onChange={(date: Date) =>
-                                    setNewTask((prevTask) => ({ ...prevTask, deadLine: date }))
+                                    setNewTask((prevTask) => ({...prevTask, deadLine: date}))
                                 }
                                 dateFormat="dd-MM-yyyy"
                                 placeholderText="Select deadline"

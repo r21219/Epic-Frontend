@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useState, useEffect} from "react";
 import TaskRow from "../tasks/TaskRow";
-import { ApiClient } from "../../controllers/ApiClient";
-import { CategoryContext } from "../../Contexts/CategoryContext";
+import {ApiClient} from "../../controllers/ApiClient";
+import {CategoryContext} from "../../Contexts/CategoryContext";
 import Category from "../../models/Category";
 
 interface CategoryRowProps {
     category: Category;
 }
 
-const CategoryRow: React.FC<CategoryRowProps> = ({ category }) => {
-    const { updateTasks } = useContext(CategoryContext);
+const CategoryRow: React.FC<CategoryRowProps> = ({category}) => {
+    const {updateTasks} = useContext(CategoryContext);
     const [tasks, setTasks] = useState(category.tasks);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const CategoryRow: React.FC<CategoryRowProps> = ({ category }) => {
                 <button onClick={() => handleSort(9)}>CompleteDesc</button>
             </div>
             {tasks.map((task) => (
-                <TaskRow task={task} key={task.id} categoryId={category.id} />
+                <TaskRow task={task} key={task.id} categoryId={category.id}/>
             ))}
         </>
     );
