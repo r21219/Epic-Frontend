@@ -10,8 +10,6 @@ const LoginPage: React.FC = () => {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        // Perform login validation and API call
-        // Once the login is successful, set the user data in the UserContext
         const userData: User = {
             name: username,
             password: password,

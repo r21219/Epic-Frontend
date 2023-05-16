@@ -1,6 +1,7 @@
-import {Category} from "../models/Category";
+import Category from "../models/Category";
 import {NewTask} from "../models/NewTask";
 import Task from "../models/Task";
+import User from "../models/User";
 
 
 export class ApiClient {
@@ -115,17 +116,26 @@ export class ApiClient {
                 }
             });
         if (response.ok) {
-            const responseData = await response.text();
-            try {
-                return JSON.parse(responseData);
-            } catch(error) {
-                console.error("Error parsing response data:", responseData);
-                throw error;
-            }
+            return await response.json();
         }
         throw new Error(await response.text());
     }
 
+    public static async createUser(newUser: User): Promise<User> {
+        const response = await fetch("http://localhost:8080/users",
+            {
+                method: "POST",
+                body: JSON.stringify(newUser),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            });
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.text());
+    }
 
 
 }

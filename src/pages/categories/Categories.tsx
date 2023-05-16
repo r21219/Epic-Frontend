@@ -7,7 +7,6 @@ import CategoryRow from "./CategoryRow";
 import CategoryTasksBottom from "./CategoryTasksBottom";
 import {CategoryContext} from "../../Contexts/CategoryContext";
 import CategoriesSort from "./CategoriesSort";
-import {Category} from "../../models/Category";
 
 const Categories = () => {
     const [editing, setEditing] = useState(false);

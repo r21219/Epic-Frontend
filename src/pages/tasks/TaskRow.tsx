@@ -71,7 +71,6 @@ const TaskRow: React.FC<TaskRowProps> = ({ task, categoryId }) => {
             ...prevTask,
             complete: !prevTask.complete,
         }));
-        console.log(editedTask.complete)
     };
 
 

@@ -4,8 +4,8 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { NewTask } from "../../models/NewTask";
 import DatePicker from "react-datepicker";
 import { NewCategory } from "../../models/NewCategory";
-import { Category } from "../../models/Category";
 import { CategoryContext } from "../../Contexts/CategoryContext";
+import Category from "../../models/Category";
 
 const CategoryTasksBottom = () => {
     const { categories, updateCategories, updateTasks } = useContext(CategoryContext);

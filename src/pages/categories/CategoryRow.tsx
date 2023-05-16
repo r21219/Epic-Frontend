@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Category } from "../../models/Category";
 import TaskRow from "../tasks/TaskRow";
 import { ApiClient } from "../../controllers/ApiClient";
 import { CategoryContext } from "../../Contexts/CategoryContext";
+import Category from "../../models/Category";
 
 interface CategoryRowProps {
     category: Category;

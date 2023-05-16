@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
-import {Category} from "../models/Category";
 import Task from "../models/Task";
+import Category from "../models/Category";
 
 interface CategoryProviderProps {
     children: React.ReactNode;

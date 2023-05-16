@@ -1,4 +1,5 @@
-import {Category} from "./Category";
+import Category from "./Category";
+
 
 export default interface Task {
     id: number;
