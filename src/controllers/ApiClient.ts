@@ -115,10 +115,17 @@ export class ApiClient {
                 }
             });
         if (response.ok) {
-            return await response.json();
+            const responseData = await response.text();
+            try {
+                return JSON.parse(responseData);
+            } catch(error) {
+                console.error("Error parsing response data:", responseData);
+                throw error;
+            }
         }
         throw new Error(await response.text());
     }
+
 
 
 }

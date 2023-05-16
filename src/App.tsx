@@ -7,6 +7,7 @@ import Categories from "./pages/categories/Categories";
 import UserLogin from  "./pages/users/UserLogin";
 import {UserContext} from "./Contexts/UserContext";
 import categories from "./pages/categories/Categories";
+import categoryRow from "./pages/categories/CategoryRow";
 
 const App = () => {
     /*
@@ -21,6 +22,7 @@ const App = () => {
             <Categories />
         </Container>
     );
+
 };
 
 export default App;
