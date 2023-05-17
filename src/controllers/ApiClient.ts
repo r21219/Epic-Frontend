@@ -14,8 +14,8 @@ export class ApiClient {
         throw new Error(await response.json());
     }
 
-    public static async getSortedCategories(sortType: number): Promise<Category[]> {
-        const response = await fetch("http://localhost:8080/categories/sort/" + sortType);
+    public static async getSortedCategories(sortType: number, userName: String | undefined): Promise<Category[]> {
+        const response = await fetch("http://localhost:8080/categories/sort/" + sortType + "/" + userName);
         if (response.ok) {
             return await response.json();
         }
@@ -30,8 +30,8 @@ export class ApiClient {
         throw new Error(await response.json());
     }
 
-    public static async getSearchedCategories(title: string): Promise<Category[]> {
-        const response = await fetch("http://localhost:8080/categories/search/" + title);
+    public static async getSearchedCategories(title: string,userName: String | undefined): Promise<Category[]> {
+        const response = await fetch("http://localhost:8080/categories/search/" + title + "/" + userName);
         if (response.ok) {
             return await response.json();
         }

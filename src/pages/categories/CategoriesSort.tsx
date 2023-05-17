@@ -2,15 +2,17 @@ import {useContext, useState} from "react";
 import {CategoryContext} from "../../Contexts/CategoryContext";
 import {Button, Col, Dropdown, FormControl, Row} from "react-bootstrap";
 import {ApiClient} from "../../controllers/ApiClient";
+import {UserContext} from "../../Contexts/UserContext";
 
 const CategoriesSort = () => {
     const {updateCategories} = useContext(CategoryContext);
+    const {user} = useContext(UserContext);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedItem, setSelectedItem] = useState('Select a sorting option');
 
     const handleSort = async (sortBy: number) => {
         try {
-            const sortedCategories = await ApiClient.getSortedCategories(sortBy);
+            const sortedCategories = await ApiClient.getSortedCategories(sortBy,user?.name);
             updateCategories(sortedCategories);
         } catch (error) {
             console.error("Error sorting categories:", error);
@@ -21,9 +23,9 @@ const CategoriesSort = () => {
     //handleSearch without async/await
     const handleSearch = (searchValue: string) => {
         if (searchValue.trim() === '') {
-            return ApiClient.getCategories().then(categories => updateCategories(categories));
+            return ApiClient.geByUser(user?.name).then(categories => updateCategories(categories));
         } else {
-            return ApiClient.getSearchedCategories(searchValue).then(categories => updateCategories(categories));
+            return ApiClient.getSearchedCategories(searchValue,user?.name).then(categories => updateCategories(categories));
         }
     }
 
