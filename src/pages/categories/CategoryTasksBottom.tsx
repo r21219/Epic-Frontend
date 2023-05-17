@@ -8,18 +8,20 @@ import {CategoryContext} from "../../Contexts/CategoryContext";
 import Category from "../../models/Category";
 
 const CategoryTasksBottom = () => {
-    const {categories, updateCategories, updateTasks} = useContext(CategoryContext);
+    const { categories, updateCategories, updateTasks } = useContext(CategoryContext);
     const [newTask, setNewTask] = useState<NewTask>(
-        new NewTask("", null, new NewCategory("") as Category, false)
+        new NewTask("", null, categories[0] || new NewCategory("") as Category, false)
     );
 
     const createTask = () => {
         if (newTask.title.trim().length > 0 && newTask.category) {
             ApiClient.createTask(newTask.category.id, newTask).then((category) => {
                 updateTasks(category.id, category.tasks);
-                updateCategories(categories.map((existingCategory) =>
-                    existingCategory.id === category.id ? category : existingCategory
-                ));
+                updateCategories(
+                    categories.map((existingCategory) =>
+                        existingCategory.id === category.id ? category : existingCategory
+                    )
+                );
                 setNewTask(new NewTask("", null, new NewCategory("") as Category, false));
             });
         } else {
@@ -56,7 +58,7 @@ const CategoryTasksBottom = () => {
                             <DatePicker
                                 selected={newTask.deadLine}
                                 onChange={(date: Date) =>
-                                    setNewTask((prevTask) => ({...prevTask, deadLine: date}))
+                                    setNewTask((prevTask) => ({ ...prevTask, deadLine: date }))
                                 }
                                 dateFormat="dd-MM-yyyy"
                                 placeholderText="Select deadline"
@@ -70,10 +72,11 @@ const CategoryTasksBottom = () => {
                         <Col>
                             <Form.Control
                                 as="select"
-                                value={newTask.category?.title}
+                                value={newTask.category?.id}
                                 onChange={(e) => {
+                                    const selectedCategoryId = parseInt(e.target.value);
                                     const selectedCategory = categories.find(
-                                        (category) => category.title === e.target.value
+                                        (category) => category.id === selectedCategoryId
                                     );
                                     if (selectedCategory) {
                                         setNewTask((prevTask) => ({
@@ -83,8 +86,9 @@ const CategoryTasksBottom = () => {
                                     }
                                 }}
                             >
+                                <option value="">Select a category</option>
                                 {categories.map((category) => (
-                                    <option key={category.id} value={category.title}>
+                                    <option key={category.id} value={category.id}>
                                         {category.title}
                                     </option>
                                 ))}

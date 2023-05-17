@@ -2,6 +2,7 @@ import Category from "../models/Category";
 import {NewTask} from "../models/NewTask";
 import Task from "../models/Task";
 import User from "../models/User";
+import {NewCategory} from "../models/NewCategory";
 
 
 export class ApiClient {
@@ -39,6 +40,13 @@ export class ApiClient {
 
     public static async getCategory(id: number): Promise<Category> {
         const response = await fetch("http://localhost:8080/categories/" + id);
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.json());
+    }
+    public static async geByUser(userName: String | undefined): Promise<Category[]> {
+        const response = await fetch("http://localhost:8080/categories/user/" + userName);
         if (response.ok) {
             return await response.json();
         }
@@ -166,5 +174,26 @@ export class ApiClient {
             return await response.json();
         }
         throw new Error(await response.json());
+    }
+
+    public static async createNewCategory(newCategory: Category, user: User | null): Promise<Category> {
+        const category = {
+            title: newCategory.title,
+            tasks: newCategory.tasks,
+            user: user
+        } as NewCategory;
+        const response = await fetch("http://localhost:8080/categories",
+            {
+                method: "POST",
+                body: JSON.stringify(category),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            });
+        if (response.ok) {
+            return await response.json();
+        }
+        throw new Error(await response.text());
     }
 }
