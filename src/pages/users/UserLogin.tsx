@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from "../../Contexts/UserContext";
 import { ApiClient } from "../../controllers/ApiClient";
 import { useNavigate } from "react-router-dom";
-import {Button} from "react-bootstrap";
+import {Button, Form, Container, Row, Col} from "react-bootstrap";
+//import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -32,23 +33,46 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <input
-                type="text"
-                placeholder="Username"
-                value={userName}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            {errorMessage && <p>{errorMessage}</p>}
-            <Button onClick={handleLogin}>Login</Button>
-            <Button onClick={handleRegister}>Register</Button>
+        <div className="login-page">
+            <Container className="login-container w-50">
+                <Row className="justify-content-center">
+                    <Col xs={12} sm={8} md={8} lg={8}>
+                        <Form className="login-form">
+                            <h2 className="text-center">Log In</h2>
+                            <Form.Group>
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={userName}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className={"mt-3"}>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </Form.Group>
+                            {errorMessage && <p className="error-message">{errorMessage}</p>}
+                            <div className="text-center mt-3">
+                            <Button variant="primary" style={{ width: '50%'  }} onClick={handleLogin}>
+                                Login
+                            </Button>
+                            </div>
+                            <div className="text-center mt-3">
+                                <small>
+                                    Not registered yet?{' '}
+                                    <a href="#" onClick={handleRegister}>
+                                        Register now
+                                    </a>
+                                </small>
+                            </div>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 };

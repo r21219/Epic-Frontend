@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {ApiClient} from "../../controllers/ApiClient";
-import {Button} from "react-bootstrap";
+import {Button, Form, Container, Row, Col} from "react-bootstrap";
 
 const UserRegister: React.FC = () => {
     const navigate = useNavigate();
@@ -30,38 +30,54 @@ const UserRegister: React.FC = () => {
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            {errorMessage && <p>{errorMessage}</p>}
-            <label>
-                Name:
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </label>
-            <br/>
-            <label>
-                Password:
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </label>
-            <br/>
-            <label>
-                Confirm Password:
-                <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-            </label>
-            <br/>
-            <Button onClick={handleRegister}>Register</Button>
-            <Button onClick={handleBackToLogin}>Back to Login</Button>
+        <div className="login-page">
+            <Container className="login-container w-50">
+                <Row className="justify-content-center">
+                    <Col xs={12} sm={8} md={8} lg={8}>
+                        <Form className="login-form">
+                            <h2 className="text-center">Register</h2>
+                            {errorMessage && <p className="error-message">{errorMessage}</p>}
+                            <Form.Group>
+                                <Form.Label>Name:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className={"mt-3"}>
+                                <Form.Label>Password:</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className={"mt-3"}>
+                                <Form.Label>Confirm Password:</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                            </Form.Group>
+                            <div className="text-center mt-3">
+                                <Button variant="primary" style={{ width: '50%'  }} onClick={handleRegister}>
+                                    Register
+                                </Button>
+                            </div>
+                            <div className="text-center mt-3">
+                                <small>
+                                    Already have an account?{' '}
+                                    <a href="#" onClick={handleBackToLogin}>
+                                        Login
+                                    </a>
+                                </small>
+                            </div>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 };

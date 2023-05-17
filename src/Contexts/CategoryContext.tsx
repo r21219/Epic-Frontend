@@ -35,6 +35,8 @@ export const CategoryProvider: React.FC<CategoryProviderProps> = ({children}) =>
         });
     };
 
+
+
     return (
         <CategoryContext.Provider value={{categories, updateCategories, updateTasks}}>
             {children}

@@ -73,3 +73,75 @@ span.is-invalid {
 .search-bar {
   z-index: 1000;
 }
+
+.login-page {
+  background-image: url("/background1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  border-radius: 15px;
+}
+
+.login-form label {
+  position: relative;
+}
+
+.login-form label::after {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: -1.5rem;
+  left: 0.75rem;
+  color: #007bff;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-form input:focus + label::after {
+  top: -2.5rem;
+  font-size: 0.75rem;
+}
+
+.error-message {
+  color: red;
+}
+
+.login-form {
+  position: relative;
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
+  outline: none;
+  height: 45px;
+  color: #fff;
+  display: block;
+}
+
+.login-input-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  font-size: 16px;
+  color: #757575;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
+
+.login-input:focus + .login-input-label,
+.login-input:valid + .login-input-label {
+  transform: translateY(-25px);
+  font-size: 14px;
+}
+
