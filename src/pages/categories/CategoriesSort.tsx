@@ -48,7 +48,7 @@ const CategoriesSort = () => {
 
     return (
         <>
-            <div className={"search-bar position-fixed top-0 start-50 translate-middle-x w-50"}>
+            <div className={"search-bar position-fixed top-0 start-50 translate-middle-x w-50 pt-3 pb-3 px-5 align-items-center justify-content-center bg-light"}>
                 <Row>
                     <Col xs={8}>
                         <FormControl

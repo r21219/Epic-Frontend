@@ -1,11 +1,20 @@
 /* App.css */
 .app-container {
   padding: 2rem;
+  margin-bottom: 5rem;
+  margin-top: 2rem;
 }
 
 .search-bar {
   margin-bottom: 1rem;
+
 }
+
+.completed-task {
+  color: gray;
+  text-decoration: line-through;
+}
+
 
 .main-content {
   margin-bottom: 2rem;
@@ -145,3 +154,22 @@ span.is-invalid {
   font-size: 14px;
 }
 
+#input-newTask {
+  z-index: 1000;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-category-btn {
+  margin-right: 10px;
+}
+
+.logout-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

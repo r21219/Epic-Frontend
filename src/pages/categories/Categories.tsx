@@ -7,7 +7,7 @@ import { CategoryContext } from "../../Contexts/CategoryContext";
 import CategoriesSort from "./CategoriesSort";
 import { UserContext } from "../../Contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineDelete } from "react-icons/ai";
+import {AiOutlineDelete, AiOutlineLogout, AiOutlinePlus} from "react-icons/ai";
 
 const Categories = () => {
     const navigate = useNavigate();
@@ -21,6 +21,11 @@ const Categories = () => {
     const { logout, user } = useContext(UserContext);
     const { categories, updateCategories } = useContext(CategoryContext);
     const [newCategoryTitle, setNewCategoryTitle] = useState("");
+    const [newCategoryVisible, setNewCategoryVisible] = useState(false);
+
+    const toggleNewCategoryVisibility = () => {
+        setNewCategoryVisible(!newCategoryVisible);
+    };
 
     const handleEdit = (event: React.MouseEvent, categoryId: number) => {
         event.stopPropagation();
@@ -107,23 +112,30 @@ const Categories = () => {
     }, []);
 
     return (
-        <Container fluid className="app-container">
-            <Button variant="info" onClick={logOff}>
-                Log out
-            </Button>
-            <h2>Categories</h2>
-            <CategoriesSort />
-            <div style={{ display: "flex", marginBottom: "10px" }}>
-                <FormControl
-                    type="text"
-                    placeholder="New category title"
-                    value={newCategoryTitle}
-                    onChange={(e) => setNewCategoryTitle(e.target.value)}
-                />
-                <Button onClick={createCategory} disabled={!user}>
-                    Create
+        <Container className="app-container">
+            <div className="header justify-content-start mb-4">
+                <h2>Categories</h2>
+                <Button variant="success" className="new-category-btn ms-4" onClick={toggleNewCategoryVisibility}>
+                    <AiOutlinePlus /> Create a new category
+                </Button>
+                <Button variant="info" className="logout-btn" onClick={logOff}>
+                    Logout <AiOutlineLogout />
                 </Button>
             </div>
+            <CategoriesSort />
+            {newCategoryVisible && (
+                <div style={{ display: "flex", marginBottom: "10px" }}>
+                    <FormControl
+                        type="text"
+                        placeholder="New category title"
+                        value={newCategoryTitle}
+                        onChange={(e) => setNewCategoryTitle(e.target.value)}
+                    />
+                    <Button onClick={createCategory} disabled={!user}>
+                        Create
+                    </Button>
+                </div>
+            )}
             <Accordion defaultActiveKey={categories[0]?.id.toString()} alwaysOpen>
                 {categories.map((category) => (
                     <Accordion.Item eventKey={category.id.toString()} key={category.id}>
@@ -170,7 +182,7 @@ const Categories = () => {
                                 </>
                             )}
                         </Accordion.Header>
-                        <Accordion.Body>
+                        <Accordion.Body className={" px-5"}>
                             <CategoryRow category={category} key={category.id} />
                         </Accordion.Body>
                     </Accordion.Item>

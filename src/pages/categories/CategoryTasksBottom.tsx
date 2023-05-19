@@ -12,27 +12,44 @@ const CategoryTasksBottom = () => {
     const [newTask, setNewTask] = useState<NewTask>(
         new NewTask("", null, categories[0] || new NewCategory("") as Category, false)
     );
+    const [titleError, setTitleError] = useState(false);
+    const [categoryError, setCategoryError] = useState(false);
+
 
     const createTask = () => {
-        if (newTask.title.trim().length > 0 && newTask.category) {
-            ApiClient.createTask(newTask.category.id, newTask).then((category) => {
-                updateTasks(category.id, category.tasks);
-                updateCategories(
-                    categories.map((existingCategory) =>
-                        existingCategory.id === category.id ? category : existingCategory
-                    )
-                );
-                setNewTask(new NewTask("", null, new NewCategory("") as Category, false));
-            });
-        } else {
-            console.error("Invalid input");
+        let isError = false;
+        if (newTask.title.trim().length === 0) {
+            setTitleError(true);
+            isError = true;
         }
+        if (!newTask.category || newTask.category.title === "Select a category") {
+            setCategoryError(true);
+            isError = true;
+        }
+
+        if (isError) {
+            return;
+        }
+
+        ApiClient.createTask(newTask.category.id, newTask).then((category) => {
+            updateTasks(category.id, category.tasks);
+            updateCategories(
+                categories.map((existingCategory) =>
+                    existingCategory.id === category.id ? category : existingCategory
+                )
+            );
+            setNewTask(new NewTask("", null, newTask.category, false));
+            setTitleError(false);
+            setCategoryError(false);
+        });
     };
 
+
+
     return (
-        <div className="position-fixed bottom-0 start-50 translate-middle-x">
+        <div id={"input-newTask"} className="position-fixed bottom-0 start-50 translate-middle-x w-75">
             <div className="bg-light p-3">
-                <Form>
+                <Form className={"pb-5"}>
                     <Row className="g-3 align-items-center">
                         <Col md="auto">
                             <Form.Label>Title:</Form.Label>
@@ -42,13 +59,17 @@ const CategoryTasksBottom = () => {
                                 type="text"
                                 placeholder="Enter task title"
                                 value={newTask.title}
-                                onChange={(e) =>
+                                className={titleError ? 'border-danger' : ''}
+                                onChange={(e) => {
+                                    setTitleError(false);
                                     setNewTask((prevTask) => ({
                                         ...prevTask,
                                         title: e.target.value,
                                     }))
-                                }
+                                }}
                             />
+                            {titleError && <div className="text-danger">Task title is required</div>}
+
                         </Col>
 
                         <Col md="auto">
@@ -73,18 +94,21 @@ const CategoryTasksBottom = () => {
                             <Form.Control
                                 as="select"
                                 value={newTask.category?.id}
+                                className={categoryError ? 'border-danger' : ''}
                                 onChange={(e) => {
                                     const selectedCategoryId = parseInt(e.target.value);
                                     const selectedCategory = categories.find(
                                         (category) => category.id === selectedCategoryId
                                     );
                                     if (selectedCategory) {
+                                        setCategoryError(false);
                                         setNewTask((prevTask) => ({
                                             ...prevTask,
                                             category: selectedCategory,
                                         }));
                                     }
                                 }}
+
                             >
                                 <option value="">Select a category</option>
                                 {categories.map((category) => (
@@ -93,6 +117,8 @@ const CategoryTasksBottom = () => {
                                     </option>
                                 ))}
                             </Form.Control>
+                            {categoryError && <div className="text-danger">Task category is required</div>}
+
                         </Col>
 
                         <Col md="auto">
