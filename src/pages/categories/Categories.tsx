@@ -8,6 +8,7 @@ import CategoriesSort from "./CategoriesSort";
 import { UserContext } from "../../Contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import {AiOutlineDelete, AiOutlineLogout, AiOutlinePlus} from "react-icons/ai";
+import animateText from "../../testing-data/animate.js";
 
 const Categories = () => {
     const navigate = useNavigate();
@@ -136,6 +137,7 @@ const Categories = () => {
                     </Button>
                 </div>
             )}
+            <div className="categories">
             <Accordion defaultActiveKey={categories[0]?.id.toString()} alwaysOpen>
                 {categories.map((category) => (
                     <Accordion.Item eventKey={category.id.toString()} key={category.id}>
@@ -188,6 +190,7 @@ const Categories = () => {
                     </Accordion.Item>
                 ))}
             </Accordion>
+            </div>
             <CategoryTasksBottom />
             <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
                 <Modal.Header closeButton>
