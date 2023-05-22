@@ -114,6 +114,7 @@ const Categories = () => {
 
     return (
         <Container className="app-container">
+            <div>
             <div className="header justify-content-start mb-4">
                 <h2>Categories</h2>
                 <Button variant="success" className="new-category-btn ms-4" onClick={toggleNewCategoryVisibility}>
@@ -190,6 +191,7 @@ const Categories = () => {
                     </Accordion.Item>
                 ))}
             </Accordion>
+            </div>
             </div>
             <CategoryTasksBottom />
             <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>

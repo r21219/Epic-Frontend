@@ -41,6 +41,7 @@ const TaskRow: React.FC<TaskRowProps> = ({task, categoryId}) => {
     };
 
     const handleEdit = () => {
+        setEditedTask({ ...task });
         setEditing(true);
     };
 
@@ -75,31 +76,29 @@ const TaskRow: React.FC<TaskRowProps> = ({task, categoryId}) => {
             ...prevTask,
             complete: !prevTask.complete,
         }));
+        handleSave();
     };
 
-    const handleCheck = () => {
+    /*const handleCheck = () => {
         toggleCompleted();
         handleSave();
+    };*/
+    const handleCheck = () => {
+        ApiClient.updateTask({
+            ...editedTask,
+            complete: !editedTask.complete
+        })
+            .then(() => {
+                fetchCategoryInformation(categoryId);
+                setEditedTask(prevTask => ({ ...prevTask, complete: !prevTask.complete }));
+            });
     };
 
 
     return (
         <>
             <div className={`task-row ${task.complete ? 'completed-task' : ''}`}>
-                <div
-                    className="task-icon"
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                    onClick={toggleCompleted}
-                >
-                    {task.complete ? (
-                        <AiFillCheckCircle />
-                    ) : hover ? (
-                        <AiOutlineCheckCircle />
-                    ) : (
-                        <IoEllipseOutline />
-                    )}
-                </div>
+
 
                 {editing ? (
                     <>
@@ -134,8 +133,18 @@ const TaskRow: React.FC<TaskRowProps> = ({task, categoryId}) => {
                 ) : (
                     <>
                         <div className="col">
-                            <span onClick={handleCheck}>
-                                {task.complete ? <FaCheckSquare /> : <FaRegCheckSquare />}
+                            <span
+                                className="task-icon"
+                                onMouseEnter={() => setHover(true)}
+                                onMouseLeave={() => setHover(false)}
+                                onClick={handleCheck}>
+                                {task.complete ? (
+                                    <AiFillCheckCircle />
+                                ) : hover ? (
+                                    <AiOutlineCheckCircle />
+                                ) : (
+                                    <IoEllipseOutline />
+                                )}
                             </span>
                             {task.title}
                         </div>
