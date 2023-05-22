@@ -3,6 +3,7 @@ import { UserContext } from "../../Contexts/UserContext";
 import { ApiClient } from "../../controllers/ApiClient";
 import { useNavigate } from "react-router-dom";
 import {Button, Form, Container, Row, Col} from "react-bootstrap";
+import stormHelmet from "../../star-wars-stormtrooper.gif";
 //import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
@@ -36,9 +37,10 @@ const LoginPage: React.FC = () => {
         <div className="login-page">
             <Container className="login-container w-50">
                 <Row className="justify-content-center">
-                    <Col xs={12} sm={8} md={8} lg={8}>
+                    <Col xs={12} sm={8} md={8} lg={8} className={" justify-content-center align-items-center d-flex"}>
                         <Form className="login-form">
-                            <h2 className="text-center">Log In</h2>
+                            <img src={stormHelmet} alt="stormtrooper" className="storm-helmet"/>
+                            <h2 className="text-center">Log in</h2>
                             <Form.Group>
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control
@@ -57,7 +59,7 @@ const LoginPage: React.FC = () => {
                             </Form.Group>
                             {errorMessage && <p className="error-message">{errorMessage}</p>}
                             <div className="text-center mt-3">
-                            <Button variant="primary" style={{ width: '50%'  }} onClick={handleLogin}>
+                            <Button variant="primary" className={"login-button"} style={{ width: '50%'  }} onClick={handleLogin}>
                                 Login
                             </Button>
                             </div>

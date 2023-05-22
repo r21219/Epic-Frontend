@@ -62,7 +62,7 @@ const UserRegister: React.FC = () => {
                                 />
                             </Form.Group>
                             <div className="text-center mt-3">
-                                <Button variant="primary" style={{ width: '50%'  }} onClick={handleRegister}>
+                                <Button variant="primary" className={"register-button"} style={{ width: '50%'  }} onClick={handleRegister}>
                                     Register
                                 </Button>
                             </div>

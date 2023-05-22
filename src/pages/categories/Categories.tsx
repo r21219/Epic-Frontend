@@ -8,7 +8,8 @@ import CategoriesSort from "./CategoriesSort";
 import { UserContext } from "../../Contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import {AiOutlineDelete, AiOutlineLogout, AiOutlinePlus} from "react-icons/ai";
-import animateText from "../../testing-data/animate.js";
+//import animateText from "../../testing-data/animate.js";
+import { animate } from "../../testing-data/animate.js";
 
 const Categories = () => {
     const navigate = useNavigate();
@@ -109,22 +110,42 @@ const Categories = () => {
     };
 
     useEffect(() => {
+        const MouseWheelHandler = animate();
+
+        // IE9, Chrome, Safari, Opera
+        window.addEventListener('mousewheel', MouseWheelHandler, false);
+        // Firefox
+        window.addEventListener('DOMMouseScroll', MouseWheelHandler, false);
+
+        return () => {
+            window.removeEventListener('mousewheel', MouseWheelHandler, false);
+            window.removeEventListener('DOMMouseScroll', MouseWheelHandler, false);
+        }
+    }, []);
+
+
+
+    useEffect(() => {
         ApiClient.geByUser(user?.name).then((data) => updateCategories(data));
     }, []);
 
     return (
         <Container className="app-container">
-            <div>
+            <CategoriesSort />
+            <Button variant="info" className="logout-btn" onClick={logOff}>
+                Logout <AiOutlineLogout />
+            </Button>
+            <div className="fade"></div>
+            <div className="star-wars">
+            <div className="accordion crawl">
             <div className="header justify-content-start mb-4">
-                <h2>Categories</h2>
-                <Button variant="success" className="new-category-btn ms-4" onClick={toggleNewCategoryVisibility}>
+                <h2>Your tasks to defend the Empire</h2>
+                <Button variant="success" className="new-category-btn ms-4 create-category" onClick={toggleNewCategoryVisibility}>
                     <AiOutlinePlus /> Create a new category
                 </Button>
-                <Button variant="info" className="logout-btn" onClick={logOff}>
-                    Logout <AiOutlineLogout />
-                </Button>
+
             </div>
-            <CategoriesSort />
+
             {newCategoryVisible && (
                 <div style={{ display: "flex", marginBottom: "10px" }}>
                     <FormControl
@@ -133,7 +154,7 @@ const Categories = () => {
                         value={newCategoryTitle}
                         onChange={(e) => setNewCategoryTitle(e.target.value)}
                     />
-                    <Button onClick={createCategory} disabled={!user}>
+                    <Button className={"create-category-button"} onClick={createCategory} disabled={!user}>
                         Create
                     </Button>
                 </div>
@@ -191,6 +212,7 @@ const Categories = () => {
                     </Accordion.Item>
                 ))}
             </Accordion>
+            </div>
             </div>
             </div>
             <CategoryTasksBottom />

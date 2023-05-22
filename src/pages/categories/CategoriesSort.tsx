@@ -48,7 +48,7 @@ const CategoriesSort = () => {
 
     return (
         <>
-            <div className={"search-bar position-fixed top-0 start-50 translate-middle-x w-50 pt-3 pb-3 px-5 align-items-center justify-content-center bg-light"}>
+            <div className={"search-bar position-fixed top-0 start-50 translate-middle-x w-50 pt-3 pb-3 px-5 align-items-center justify-content-center"}>
                 <Row>
                     <Col xs={8}>
                         <FormControl
@@ -67,19 +67,19 @@ const CategoriesSort = () => {
                         />
                     </Col>
                     <Col xs={2}>
-                        <Button variant="primary" onClick={handleSearchButtonClick}>
+                        <Button variant="primary" className={"search-button"} onClick={handleSearchButtonClick}>
                             Search
                         </Button>
                     </Col>
                     <Col xs={2}>
-                        {searchTerm && <Button variant="primary" onClick={handleReset}>
-                            Reset
+                        {searchTerm && <Button variant="primary" className={"reset-button"} onClick={handleReset}>
+                            Wipe
                         </Button>}
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <p>Sort categories by:</p>
+                        <p className="sort-text">Sort categories by:</p>
                     </Col>
                     <Col xs={6}>
                         <Dropdown>

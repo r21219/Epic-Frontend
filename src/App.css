@@ -1,13 +1,71 @@
 /* App.css */
+@font-face {
+  font-family: "Star";   /*Can be any text*/
+  src: local("Starjedi"), url("./fonts/Starjedi.ttf") format("truetype");
+}
+
+h2 {
+  font-family: "Star" !important;
+}
+
+
 .app-container {
   padding: 2rem;
   margin-bottom: 5rem;
   margin-top: 2rem;
+
+}
+body {
+  height: 100vh;
+  background-image: url("stars.jpg") !important;
+
+  width: 100%;
+
+
+  overflow: hidden !important;
+
+}
+.create-task, .create-category, .search-button, .login-button, .register-button, .create-category-button {
+  background-color: #feda4a !important;
+  color: black !important;
+  font-weight: bold !important;
+  border: none !important;
+
+}
+
+.create-task:hover, .create-category:hover, .search-button:hover, .login-button:hover, .register-button:hover, .create-category-button:hover {
+  box-shadow: 0 0 70px 5px #feda4a !important;
+}
+.reset-button {
+  background-color: red !important;
+}
+
+.react-datepicker, .react-datepicker__header  {
+  background-color: rgba(106, 106, 106, 0.5) !important;
+  backdrop-filter: blur(5px) !important;
+  border-radius: 15px !important;
+  color: #feda4a !important;
+}
+
+.react-datepicker__day-name, .react-datepicker__day {
+    color: #feda4a !important;
 }
 
 .search-bar {
   margin-bottom: 1rem;
 
+}
+.dropdown-menu {
+  background-color: rgba(106, 106, 106, 0.5) !important;
+  backdrop-filter: blur(5px) !important;
+  border-radius: 15px !important;
+}
+
+button {
+  background-color: #feda4a;
+  margin-right: 10px !important;
+  border-radius: 10px !important;
+  border: none !important;
 }
 
 .completed-task {
@@ -79,12 +137,19 @@ span.is-invalid {
 .btn-edit-category {
   margin-left: 1rem;
 }
-.search-bar {
+.search-bar, .new-task {
   z-index: 1000;
+  background-color: rgba(106, 106, 106, 0.5) !important;
+  backdrop-filter: blur(5px) !important;
+  border-radius: 15px !important;
+color: #feda4a;
+}
+.sort-text {
+  color: white;
 }
 
 .login-page {
-  background-image: url("/background1.png");
+
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -92,12 +157,21 @@ span.is-invalid {
   justify-content: center;
   align-items: center;
 }
+.login-container {
+  background-color: rgba(106, 106, 106, 0.5) !important;
+  backdrop-filter: blur(5px);
+  border-radius: 15px;
+}
+.login-container label, .login-container h2, .login-container small, a {
+  color:  #feda4a !important;
+}
 
 .login-container {
   background: rgba(255, 255, 255, 0.8);
   padding: 2rem;
   border-radius: 15px;
 }
+
 
 .login-form label {
   position: relative;
@@ -175,3 +249,62 @@ span.is-invalid {
 }
 
 
+.star-wars {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  /*height: 800px;*/
+  height: 156px;
+
+  color: #feda4a;
+  /*font-family: 'Pathway Gothic One', sans-serif;
+  font-size: 500%;
+  font-weight: 600;
+  letter-spacing: 6px;
+  line-height: 150%;*/
+  perspective: 400px;
+  text-align: justify;
+}
+
+
+
+.crawl {
+  position: relative;
+  top: 9999px;
+  width: 80%;
+  transform-origin: 50% 100%;
+  /*animation: crawl 60s linear;*/
+}
+
+@keyframes crawl {
+  0% {
+    top: 0;
+    transform: rotateX(30deg)  translateZ(0);
+  }
+  100% {
+    top: -6000px;
+    transform: rotateX(30deg) translateZ(-5500px);
+  }
+}
+
+.form-control {
+  border-color: #feda4a !important;
+  border-width: 5px !important;
+  background-color: black !important;
+  color:  #feda4a !important;
+}
+
+
+
+.storm-helmet {
+  width: 200px;
+  height: auto;
+  border-radius: 100px;
+  margin-left: 15px;
+}
+
+
+.accordion-button, .accordion, .accordion-header, .accordion-collapse {
+  background-color: black !important;
+  color: #feda4a !important;
+}

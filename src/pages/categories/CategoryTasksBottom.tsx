@@ -48,7 +48,7 @@ const CategoryTasksBottom = () => {
 
     return (
         <div id={"input-newTask"} className="position-fixed bottom-0 start-50 translate-middle-x w-75">
-            <div className="bg-light p-3">
+            <div className="new-task p-3">
                 <Form className={"pb-5"}>
                     <Row className="g-3 align-items-center">
                         <Col md="auto">
@@ -57,7 +57,7 @@ const CategoryTasksBottom = () => {
                         <Col>
                             <Form.Control
                                 type="text"
-                                placeholder="Enter task title"
+                                placeholder="Do or do not, there is no try"
                                 value={newTask.title}
                                 className={titleError ? 'border-danger' : ''}
                                 onChange={(e) => {
@@ -94,7 +94,7 @@ const CategoryTasksBottom = () => {
                             <Form.Control
                                 as="select"
                                 value={newTask.category?.id}
-                                className={categoryError ? 'border-danger' : ''}
+                                className={categoryError ? 'border-danger' : 'select-category'}
                                 onChange={(e) => {
                                     const selectedCategoryId = parseInt(e.target.value);
                                     const selectedCategory = categories.find(
@@ -122,7 +122,7 @@ const CategoryTasksBottom = () => {
                         </Col>
 
                         <Col md="auto">
-                            <Button variant="primary" type="button" onClick={createTask}>
+                            <Button variant="primary" type="button" className={"create-task"} onClick={createTask}>
                                 Create Task
                             </Button>
                         </Col>
