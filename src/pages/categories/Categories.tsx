@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import {AiOutlineDelete, AiOutlineLogout, AiOutlinePlus} from "react-icons/ai";
 //import animateText from "../../testing-data/animate.js";
 import { animate } from "../../testing-data/animate.js";
+import yoda from "../../yoda.png";
 
 const Categories = () => {
     const navigate = useNavigate();
@@ -139,7 +140,7 @@ const Categories = () => {
             <div className="star-wars">
             <div className="accordion crawl">
             <div className="header justify-content-start mb-4">
-                <h2>Your tasks to defend the Empire</h2>
+                <h2>Your tasks to defeat the Empire</h2>
                 <Button variant="success" className="new-category-btn ms-4 create-category" onClick={toggleNewCategoryVisibility}>
                     <AiOutlinePlus /> Create a new category
                 </Button>
@@ -218,9 +219,11 @@ const Categories = () => {
             <CategoryTasksBottom />
             <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete Category</Modal.Title>
+                    <Modal.Title> <img className={"modal-image"} src={yoda}/>Delete Category</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Do you really want to delete this category with all its tasks?</Modal.Body>
+                <Modal.Body>
+
+                    This category with tasks all want to delete really do you?</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDeleteModal}>
                         No

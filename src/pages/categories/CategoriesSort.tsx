@@ -83,7 +83,7 @@ const CategoriesSort = () => {
                     </Col>
                     <Col xs={6}>
                         <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            <Dropdown.Toggle className={"dropdown-sort"} id="dropdown-basic">
                                 {/*show selected dropdown item*/}
                                 {selectedItem}
 

@@ -13,6 +13,7 @@ export const animate = () => {
         const accordion = document.querySelector('.accordion');
         if (accordion) {
             accordion.style.top = `${o.top}px`;
+            /*accordion.style.top = '100%';*/
             accordion.style.transform = `rotateX(${o.rotateX}deg) translateZ(${o.translateZ}px)`;
         }
 
@@ -24,7 +25,8 @@ export const animate = () => {
         const limit = {'min': 0, 'max': 100};
         const top_l = {'min': 0, 'max': -6000};
         const rotateX_l = {'min': 20, 'max': 25};
-        const translateZ_l = {'min': 0, 'max': -2500};
+        /*const translateZ_l = {'min': 0, 'max': -2500};*/
+        const translateZ_l = {'min': 0, 'max': -2000};
 
         const m_top = (top_l.max - top_l.min) / (limit.max - limit.min);
         const m_rotateX = (rotateX_l.max - rotateX_l.min) / (limit.max - limit.min);
@@ -43,5 +45,15 @@ export const animate = () => {
         return output;
     }
 
+
     return MouseWheelHandler;
 }
+
+/*window.onload = () => {
+    const accordion = document.querySelector('.accordion');
+    if (accordion) {
+        setTimeout(() => {
+            accordion.style.top = '0';
+        }, 1000);  // Delay of 1s before animation starts
+    }
+};*/

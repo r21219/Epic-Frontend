@@ -65,7 +65,7 @@ const LoginPage: React.FC = () => {
                             </div>
                             <div className="text-center mt-3">
                                 <small>
-                                    Not registered yet?{' '}
+                                    Registered yet not?{' '}
                                     <a href="#" onClick={handleRegister}>
                                         Register now
                                     </a>
