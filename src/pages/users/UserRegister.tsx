@@ -17,7 +17,7 @@ const UserRegister: React.FC = () => {
         }
 
         try {
-            await ApiClient.createUser(name, password);
+            await ApiClient.register(name, password);
             navigate("/login");
         } catch (error) {
             console.error("Error registering user:", error);

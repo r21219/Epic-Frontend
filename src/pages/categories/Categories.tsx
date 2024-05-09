@@ -8,7 +8,6 @@ import CategoriesSort from "./CategoriesSort";
 import { UserContext } from "../../Contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import {AiOutlineDelete, AiOutlineLogout, AiOutlinePlus} from "react-icons/ai";
-//import animateText from "../../testing-data/animate.js";
 import { animate } from "../../testing-data/animate.js";
 import yoda from "../../yoda.png";
 

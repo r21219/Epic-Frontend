@@ -76,24 +76,7 @@ const TaskRow: React.FC<TaskRowProps> = ({task, categoryId}) => {
             ...prevTask,
             complete: !prevTask.complete,
         }));
-        handleSave();
     };
-
-    /*const handleCheck = () => {
-        toggleCompleted();
-        handleSave();
-    };*/
-    const handleCheck = () => {
-        ApiClient.updateTask({
-            ...editedTask,
-            complete: !editedTask.complete
-        })
-            .then(() => {
-                fetchCategoryInformation(categoryId);
-                setEditedTask(prevTask => ({ ...prevTask, complete: !prevTask.complete }));
-            });
-    };
-
 
     return (
         <>
@@ -136,8 +119,7 @@ const TaskRow: React.FC<TaskRowProps> = ({task, categoryId}) => {
                             <span
                                 className="task-icon"
                                 onMouseEnter={() => setHover(true)}
-                                onMouseLeave={() => setHover(false)}
-                                onClick={handleCheck}>
+                                onMouseLeave={() => setHover(false)}>
                                 {task.complete ? (
                                     <AiFillCheckCircle />
                                 ) : hover ? (
@@ -162,7 +144,7 @@ const TaskRow: React.FC<TaskRowProps> = ({task, categoryId}) => {
                     </Button>
                 )}
                 <Button variant="danger" onClick={() => deleteTask(task.id)}>
-                    <AiOutlineDelete/> {/* Trash can icon */}
+                    <AiOutlineDelete/>
                 </Button>
             </div>
             <br/>

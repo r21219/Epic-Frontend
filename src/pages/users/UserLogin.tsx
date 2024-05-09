@@ -4,6 +4,7 @@ import { ApiClient } from "../../controllers/ApiClient";
 import { useNavigate } from "react-router-dom";
 import {Button, Form, Container, Row, Col} from "react-bootstrap";
 import stormHelmet from "../../star-wars-stormtrooper.gif";
+import User from "../../models/User";
 //import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
@@ -21,8 +22,13 @@ const LoginPage: React.FC = () => {
 
     const handleLogin = async () => {
         try {
-            const user = await ApiClient.loginUser(userName, password);
-            login(user);
+            if(await ApiClient.login(userName, password)){
+                const user: User = {
+                    name: userName,
+                    password: password
+                };
+                login(user);
+            }
         } catch (error) {
             console.error("Error logging in:", error);
             setErrorMessage("Wrong password or username.");
